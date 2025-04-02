@@ -1,7 +1,7 @@
-DROP DATABASE IF EXISTS healthdiary;
-CREATE DATABASE healthdiary;
+DROP DATABASE IF EXISTS techmed;
+CREATE DATABASE techmed;
 
-USE healthdiary;
+USE techmed;
 
 CREATE TABLE Users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
