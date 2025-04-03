@@ -1,5 +1,7 @@
 import express from 'express';
-import {getMe, login, adminLogin } from '../controllers/auth-controller.js';
+// import {getMe, postLogin} from '../controllers/auth-controller.js';
+import {getMe, login,} from '../controllers/kubios-auth-controller.js';
+import {adminLogin } from '../controllers/auth-controller.js';
 import {authenticateToken} from '../middlewares/authentication.js';
 
 const authRouter = express.Router();
@@ -37,6 +39,7 @@ const authRouter = express.Router();
  * @apiSuccess {String} token Authentication token
  */
 authRouter.post('/login', login);
+
 
 /**
  * Route for admin login
