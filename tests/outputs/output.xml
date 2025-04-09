@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.2.2 (Python 3.13.1 on win32)" generated="2025-04-09T16:09:22.052682" rpa="false" schemaversion="5">
+<suite id="s1" name="Kirjautumis" source="C:\Users\motha\Techmed\tests\test_cases\kirjautumis.robot">
+<test id="s1-t1" name="Test Web Form" line="6">
+<kw name="New Browser" owner="Browser">
+<msg time="2025-04-09T16:09:22.233487" level="INFO">{"browser": "chromium", "headless": false, "chromiumSandbox": false, "devtools": false, "handleSIGHUP": true, "handleSIGINT": true, "handleSIGTERM": true, "slowMo": 0.0, "timeout": 30000.0, "tracesDir": "C:\\Users\\motha\\Techmed\\tests\\test_cases\\..\\outputs\\browser\\traces\\temp\\65224d08-6ed5-4e84-ae7d-5aeff5c161c4"}</msg>
+<msg time="2025-04-09T16:09:22.261055" level="INFO">Starting Browser process C:\Users\motha\AppData\Roaming\Python\Python313\site-packages\Browser\wrapper\index.js using port 52099</msg>
+<msg time="2025-04-09T16:09:22.261212" level="INFO">Node startup parameters: ['node', 'C:\\Users\\motha\\AppData\\Roaming\\Python\\Python313\\site-packages\\Browser\\wrapper\\index.js', '52099']</msg>
+<msg time="2025-04-09T16:09:23.483345" level="INFO">Successfully created browser with options: {"browser":"chromium","headless":false,"chromiumSandbox":false,"devtools":false,"handleSIGHUP":true,"handleSIGINT":true,"handleSIGTERM":true,"slowMo":0,"timeout":30000,"tracesDir":"C:\\Users\\motha\\Techmed\\tests\\test_cases\\..\\outputs\\browser\\traces\\temp\\65224d08-6ed5-4e84-ae7d-5aeff5c161c4"}</msg>
+<arg>chromium</arg>
+<arg>headless=No</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Create a new playwright Browser with specified options.</doc>
+<status status="PASS" start="2025-04-09T16:09:22.232752" elapsed="1.250855"/>
+</kw>
+<kw name="New Page" owner="Browser">
+<msg time="2025-04-09T16:09:23.822677" level="INFO">Successfully initialized new page object and opened url: http://127.0.0.1:5500/sovellus/frontend/index.html</msg>
+<msg time="2025-04-09T16:09:23.822751" level="INFO">No context was open. New context was automatically opened when this page is created.</msg>
+<arg>http://127.0.0.1:5500/sovellus/frontend/index.html</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Open a new Page.</doc>
+<status status="PASS" start="2025-04-09T16:09:23.488398" elapsed="0.334491"/>
+</kw>
+<kw name="Get Title" owner="Browser">
+<msg time="2025-04-09T16:09:23.831116" level="INFO">Title: 'TechMed'</msg>
+<arg>==</arg>
+<arg>TechMed</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the title of the current page.</doc>
+<status status="PASS" start="2025-04-09T16:09:23.823177" elapsed="0.008041"/>
+</kw>
+<kw name="Type Text" owner="Browser">
+<msg time="2025-04-09T16:09:23.832006" level="INFO">Types the text 'lilmotha00@gmail.com' in the given field.</msg>
+<arg>[id="username"]</arg>
+<arg>${Username}</arg>
+<arg>delay=0.1 s</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Types the given ``txt`` into the text field found by ``selector``.</doc>
+<status status="PASS" start="2025-04-09T16:09:23.831464" elapsed="2.136900"/>
+</kw>
+<kw name="Type Secret" owner="Browser">
+<arg>[id="password"]</arg>
+<arg>$Password</arg>
+<arg>delay=0.1 s</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Types the given secret from ``variable_name`` into the text field
+found by ``selector``.</doc>
+<status status="PASS" start="2025-04-09T16:09:25.968630" elapsed="1.277175"/>
+</kw>
+<kw name="Click" owner="Browser">
+<msg time="2025-04-09T16:09:27.246552" level="INFO">Clicks the element 'xpath=//button[text()='Log In']'.</msg>
+<arg>xpath=//button[text()='Log In']</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" start="2025-04-09T16:09:27.246093" elapsed="0.020863"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2025-04-09T16:09:29.268020" level="INFO">Slept 2 seconds.</msg>
+<arg>2s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2025-04-09T16:09:27.267237" elapsed="2.000903"/>
+</kw>
+<msg time="2025-04-09T16:09:29.271380" level="INFO">Set timeout to: 10000</msg>
+<status status="PASS" start="2025-04-09T16:09:22.231617" elapsed="7.036768"/>
+</test>
+<status status="PASS" start="2025-04-09T16:09:22.053851" elapsed="7.218506"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Kirjautumis" id="s1" pass="1" fail="0" skip="0">Kirjautumis</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
