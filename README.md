@@ -1,7 +1,8 @@
 ## Testaus
 
-Projektin testaus on toteutettu käyttäen Robot Frameworkia.
+Sovellus on tällä hetkellä kehityksen alkuvaiheessa, ja toteutettu automaatiotesti kattaa vain **kirjautumistoiminnon**.
 
+Testit sijaitsevat `tests/`-kansiossa:
 Testikansiot:
 - `tests/test_cases/`: testitapaukset
 - `tests/resources/`: avainsanat ja resurssit
