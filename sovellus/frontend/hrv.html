@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HRV</title>
+  <link rel="stylesheet" href="hrv.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-left">TECHMED</div>
+    <ul class="nav-center">
+      <li><a href="home.html">Koti</a></li>
+      <li><a href="harjoitukset.html">Harjoitukset</a></li>
+      <li><a href="hrv.html" class="active">HRV</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="#" onclick="logout()"><u>Kirjaudu ulos</u></a>
+    </div>
+  </nav>
+
+  <!-- Page -->
+  <main class="wrapper">
+    <div class="card welcome center">
+      <p><em>Tervetuloa tarkastelemaan<br>HRV tasojasi </em></p>
+    </div>
+
+    <div class="grid-hrv">
+      <div class="card">
+        <div class="card-header">HRV</div>
+        <div class="card-body">
+          <em>Mitattu 2.4<br>48ms</em>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">HRV Keskiarvo</div>
+        <div class="card-body">
+          <em>2.3–2.4<br>20–50ms</em>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">Stressi taso</div>
+        <div class="card-body">
+          <em>Normaali</em>
+        </div>
+      </div>
+      <div class="card wide">
+        <div class="card-header">HRV Taso</div>
+        <div class="card-body">
+          <em>Normaali</em>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="hrv.js"></script>
+</body>
+</html>
