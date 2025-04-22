@@ -5,8 +5,8 @@ Sovelluksen testaus on toteutettu **Robot Framework**-automaatiotestauksella. Ta
 ## Testitapausten rakenne
 
 Testit on jaettu seuraaviin osiin:
-- **Kirjautuminen**: Testit, jotka varmistavat käyttäjän kirjautumistoiminnon toimivuuden.
-...
+- **Kirjautuminen**: Testit, joka varmistaa käyttäjän kirjautumistoiminnon toimivuuden.
+- Epäonnistuneen kirjautumisen.
 
 ### Testitulokset
 
