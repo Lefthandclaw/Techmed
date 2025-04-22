@@ -1,6 +1,6 @@
 ## Testaus
 
-Sovellus on tällä hetkellä kehityksen alkuvaiheessa, ja toteutettu automaatiotesti kattaa vain **kirjautumistoiminnon**.
+Sovellus on tällä hetkellä kehityksen alkuvaiheessa, ja toteutettu automaatiotesti kattaa vain **kirjautumistoiminnon**, myös epäonnistuneen kirjatumisyrityksen.
 
 Testit sijaitsevat `tests/`-kansiossa:
 Testikansiot:
