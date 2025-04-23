@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap');
 
-/* Reset and base styling */
 * {
   margin: 0;
   padding: 0;
@@ -15,7 +14,6 @@ body {
   flex-direction: column;
 }
 
-/* NAVIGATION */
 .navbar {
     width: 100%;
     padding: 1.2rem 2rem;
@@ -65,7 +63,6 @@ body {
   
   
 
-/* HOME LAYOUT */
 .home-wrapper {
   width: 100%;
   max-width: 1000px;
@@ -95,14 +92,12 @@ body {
   white-space: pre-line;
 }
 
-/* Top explanation card */
 .card.full-width {
   max-width: 800px;
   text-align: center;
     font-size: 1.3rem;
 }
 
-/* Center card style override */
 .card.center.highlight {
   font-size: 1.3rem;
   line-height: 2rem;
@@ -111,7 +106,6 @@ body {
   ;
 }
 
-/* 3-Column Layout */
 .card-row {
   display: flex;
   flex-wrap: wrap;
@@ -120,7 +114,6 @@ body {
   width: 100%;
 }
 
-/* RESPONSIVE */
 @media screen and (max-width: 768px) {
   .navbar-inner {
     flex-direction: column;

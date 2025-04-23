@@ -5,9 +5,8 @@ const loginForm = document.getElementById('login-form');
 
 let jwtToken = localStorage.getItem('jwtToken');
 
-// Optionally redirect if already logged in
 if (jwtToken) {
-  window.location.href = "home.html"; // redirect logged in users
+  window.location.href = "home.html"; 
 }
 
 loginForm.addEventListener('submit', async (e) => {
@@ -33,7 +32,6 @@ loginForm.addEventListener('submit', async (e) => {
     jwtToken = data.token; 
     localStorage.setItem('jwtToken', jwtToken);
 
-    // ✅ Now redirect to home
     window.location.href = "home.html";
 
   } catch (error) {

@@ -1,10 +1,8 @@
-// Logout functionality
 function logout() {
     localStorage.removeItem('jwtToken');
     window.location.replace("index.html");
   }
   
-  // Exercise content per HRV level
   const exerciseData = {
     normaali: [
       {
@@ -64,7 +62,6 @@ function logout() {
     ]
   };
   
-  // Create and display exercise blocks
   function updateExercises() {
     const level = document.getElementById("hrv-level").value;
     const container = document.getElementById("exercise-container");
@@ -92,9 +89,8 @@ function logout() {
     });
   }
   
-  // Init
   document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("hrv-level").addEventListener("change", updateExercises);
-    updateExercises(); // initial load
+    updateExercises();
   });
   

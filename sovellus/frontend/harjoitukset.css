@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap');
 
-/* Reset & base */
 * {
   margin: 0;
   padding: 0;
@@ -15,7 +14,6 @@ body {
   min-height: 100vh;
 }
 
-/* NAVBAR */
 .navbar {
   width: 100%;
   padding: 1.2rem 2rem;
@@ -60,7 +58,6 @@ body {
   color: black;
 }
 
-/* WRAPPER & HEADER */
 .wrapper {
   max-width: 1000px;
   margin: 3rem auto;
@@ -89,7 +86,6 @@ body {
   border-radius: 6px;
 }
 
-/* EXERCISE GRID */
 .exercise-table {
     display: flex;
     flex-wrap: wrap;
@@ -135,7 +131,6 @@ audio {
   border-radius: 6px;
 }
 
-/* RESPONSIVE */
 @media screen and (max-width: 768px) {
   .exercise-table {
     flex-direction: column;
