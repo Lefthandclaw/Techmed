@@ -6,6 +6,8 @@
   <title>HRV</title>
   <link rel="stylesheet" href="hrv.css" />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 <body>
 
@@ -27,6 +29,16 @@
     <div class="card welcome center">
       <p><em>Tervetuloa tarkastelemaan<br>HRV tasojasi </em></p>
     </div>
+
+    <pre>GET http://localhost:3000/api/kubios/user-info</pre>
+      <button class="get_user_info">Get user info</button>
+
+      <pre>GET  http://localhost:3000/api/kubios/user-data</pre>
+      <button class="get_user_data">Get user data</button>
+
+      <div>
+        <canvas id="jsChart"></canvas>
+      </div>
 
     <div class="grid-hrv">
       <div class="card">
@@ -57,5 +69,6 @@
   </main>
 
   <script src="hrv.js"></script>
+  
 </body>
 </html>

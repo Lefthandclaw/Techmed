@@ -28,6 +28,7 @@ const getUserData = async (req, res, next) => {
     },
   );
   const results = await response.json();
+  console.log('Kubios results:', results);
   return res.json(results);
 };
 
