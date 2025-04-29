@@ -1,56 +1,57 @@
 const token = localStorage.getItem('jwtToken');
+
 if (!token) {
-  window.location.replace("index.html");
+	window.location.replace("index.html");
 }
 
 const usernameSpan = document.getElementById("username");
 if (usernameSpan) {
-  usernameSpan.textContent = localStorage.getItem("username") || "Käyttäjänimi";
+	usernameSpan.textContent = localStorage.getItem("username") || "Käyttäjänimi";
 }
 
 function logout() {
-  localStorage.removeItem("jwtToken");
-  window.location.replace("index.html");
+	localStorage.removeItem("jwtToken");
+	window.location.replace("index.html");
 }
 
 const fetchData = async (url, options = {}) => {
-  try {
-    const response = await fetch(url, options);
+	try {
+		const response = await fetch(url, options);
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      return {error: errorData.message || 'An error occurred'};
-    }
-    return await response.json(); // Return successful response data
-  } catch (error) {
-    console.error('fetchData() error:', error.message);
-    return {error: error.message};
-  }
+		if (!response.ok) {
+			const errorData = await response.json();
+			return { error: errorData.message || 'An error occurred' };
+		}
+		return await response.json();
+	} catch (error) {
+		console.error('fetchData() error:', error.message);
+		return { error: error.message };
+	}
 };
 
 const getUserInfo = async () => {
-  console.log('Käyttäjän INFO Kubioksesta');
+	console.log('Käyttäjän INFO Kubioksesta');
 
-  const url = 'http://localhost:3000/api/kubios-data/user-info';
-  const token = localStorage.getItem('jwtToken');
-  const headers = { Authorization: `Bearer ${token}` };
-  const options = {
-    headers: headers,
-  };
-  const userData = await fetchData(url, options);
+	const url = 'http://localhost:3000/api/kubios-data/user-info';
+	const token = localStorage.getItem('jwtToken');
+	const headers = { Authorization: `Bearer ${token}` };
+	const options = {
+		headers: headers,
+	};
+	const userData = await fetchData(url, options);
 
-  if (userData.error) {
-    console.log('Käyttäjän tietojen haku Kubioksesta epäonnistui');
-    return;
-  }
-  console.log(userData);
+	if (userData.error) {
+		console.log('Käyttäjän tietojen haku Kubioksesta epäonnistui');
+		return;
+	}
+	console.log(userData);
 };
 
 const getUserInfoBtn = document.querySelector('.get_user_info');
 getUserInfoBtn.addEventListener('click', getUserInfo);
 
 const drawChart = async (userData) => {
-	
+
 
 
 	// You need to formulate data into correct structure in the BE
@@ -120,19 +121,87 @@ const drawChart = async (userData) => {
 	// https://github.com/chartjs/awesome#adapters
 };
 
+// ---------------------------
+// Vanilla Calendar
+function drawVanillaCalendar(userData) {
+	const options = {
+		settings: {
+			lang: 'fi-FI',
+			iso8601: true
+		},
+		date: {
+			today: new Date()
+		},
+		popups: {}, // We'll fill this below based on mockdata
+		actions: {
+			clickDay(e, dates) {
+				console.log('Clicked date:', dates);
+			}
+		}
+	};
+
+	// Populate popups from userData
+	userData.results.forEach((item) => {
+		const date = item.daily_result.split('T')[0]; // Extract date only
+		options.popups[date] = {
+			html: `<div>Readiness: ${item.result.readiness}<br>Stress: ${item.result.stress_index}</div>`,
+		};
+	});
+
+	const calendar = new VanillaCalendar('#calendar', options);
+	calendar.init();
+}
+
+// ---------------------------
+// FullCalendar
+function drawFullCalendar(userData) {
+	const calendarEl = document.getElementById('calendar2');
+
+	const calendar = new FullCalendar.Calendar(calendarEl, {
+		initialView: 'dayGridMonth',
+		headerToolbar: {
+			left: 'prev,next today',
+			center: 'title',
+			right: 'dayGridMonth,timeGridWeek,timeGridDay',
+		},
+		events: userData.results.map((item) => {
+			const readiness = item.result.readiness ?? 0;
+			const stress = item.result.stress_index ?? 0;
+			return {
+				title: `R: ${readiness} | S: ${stress}`,
+				start: item.daily_result,
+				color: readiness >= 80 ? '#4CAF50' : '#F44336',
+				extendedProps: { readiness, stress },
+			};
+		}),
+		eventClick: function (info) {
+			console.log('Event clicked:', info.event.extendedProps);
+		},
+		eventContent: function (info) {
+			const { readiness } = info.event.extendedProps;
+			const emoji = readiness >= 80 ? '💪' : '⚡';
+			return {
+				html: `<div style="font-size: 11px;">${emoji} ${info.event.title}</div>`,
+			};
+		},
+	});
+
+	calendar.render();
+}
+
 const getUserData = async () => {
 	console.log('Käyttäjän DATA Kubioksesta');
-/*
-	const url = 'http://localhost:3000/api/kubios-data/user-data';
-	const token = localStorage.getItem('jwtToken');
-	const headers = { Authorization: `Bearer ${token}` };
-	const options = {
-		headers: headers,
-	};
-	const userData = await fetchData(url, options);
-//*/
-const url = 'mockdata.json';
-const userData = await fetchData(url);
+	/*
+		const url = 'http://localhost:3000/api/kubios-data/user-data';
+		const token = localStorage.getItem('jwtToken');
+		const headers = { Authorization: `Bearer ${token}` };
+		const options = {
+			headers: headers,
+		};
+		const userData = await fetchData(url, options);
+	//*/
+	const url = 'mockdata.json';
+	const userData = await fetchData(url);
 
 	if (userData.error) {
 		console.log('Käyttäjän tietojen haku Kubioksesta epäonnistui');
@@ -143,6 +212,9 @@ const userData = await fetchData(url);
 	// Draw chart with chart.js
 	drawChart(userData);
 
+	// NEW: Draw calendars
+	drawFullCalendar(userData);
+	drawVanillaCalendar(userData);
 };
 
 const getUserDataBtn = document.querySelector('.get_user_data');
