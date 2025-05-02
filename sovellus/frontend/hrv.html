@@ -6,10 +6,9 @@
   <title>HRV</title>
   <link rel="stylesheet" href="hrv.css" />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@uvarov.frontend/vanilla-calendar/build/vanilla-calendar.min.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.17/index.global.min.js'></script>
-  <script src="https://cdn.jsdelivr.net/npm/@uvarov.frontend/vanilla-calendar/build/vanilla-calendar.min.js"></script>
 
 </head>
 <body>
@@ -37,48 +36,79 @@
       <pre>GET  http://localhost:3000/api/kubios/user-data</pre>
       <button class="get_user_data">Get user data</button>
 
+      <div class="buttons">
+        <button onclick="drawChart(globalUserData, 7)">7 päivää</button>
+        <button onclick="drawChart(globalUserData, 30)">30 päivää</button>
+        <button onclick="drawChart(globalUserData, 'all')">Kaikki</button>
+      </div>
+      
       <div>
         <canvas id="jsChart"></canvas>
       </div>
 
-      <h2>Vanilla</h2>
+      <div id="popup-alert" class="popup-alert" style="display: none;">
+        – ei dataa valitulla aikavälillä –
+      </div>
+      
 
-      <a href="https://vanilla-calendar.pro/">https://vanilla-calendar.pro/</a>
-
-      <div id="calendar" style="width: 100%;"></div>
-
-      <h2>Fullcalendar</h2>
+      <h2>HRV kalenteri</h2>
 
       <a href="https://fullcalendar.io/">https://fullcalendar.io/</a>
 
       <div id="calendar2" style="width: 100%;"></div>
 
-    <div class="grid-hrv">
-      <div class="card">
-        <div class="card-header">HRV</div>
-        <div class="card-body">
-          <em>Mitattu 2.4<br>48ms</em>
+
+      <div class="grid-hrv">
+        <div class="card">
+          <div class="card-header">HRV</div>
+          <div class="card-body">
+            <em id="hrv-value">–</em>
+            <div class="buttons">
+              <button onclick="updateView('hrv', 7)">7d</button>
+              <button onclick="updateView('hrv', 30)">30d</button>
+              <button onclick="updateView('hrv', 'all')">Kaikki</button>
+            </div>
+          </div>
+        </div>
+      
+        <div class="card">
+          <div class="card-header">HRV Keskiarvo</div>
+          <div class="card-body">
+            <em id="hrv-avg">–</em>
+            <div class="buttons">
+              <button onclick="updateView('avg', 7)">7d</button>
+              <button onclick="updateView('avg', 30)">30d</button>
+              <button onclick="updateView('avg', 'all')">Kaikki</button>
+            </div>
+          </div>
+        </div>
+      
+        <div class="card">
+          <div class="card-header">Stressi taso</div>
+          <div class="card-body">
+            <em id="stress-level">–</em>
+            <div class="buttons">
+              <button onclick="updateView('stress', 7)">7d</button>
+              <button onclick="updateView('stress', 30)">30d</button>
+              <button onclick="updateView('stress', 'all')">Kaikki</button>
+            </div>
+          </div>
+        </div>
+      
+        <div class="card wide">
+          <div class="card-header">HRV Taso</div>
+          <div class="card-body">
+            <em id="hrv-status">–</em>
+            <div class="buttons">
+              <button onclick="updateView('status', 7)">7d</button>
+              <button onclick="updateView('status', 30)">30d</button>
+              <button onclick="updateView('status', 'all')">Kaikki</button>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="card">
-        <div class="card-header">HRV Keskiarvo</div>
-        <div class="card-body">
-          <em>2.3–2.4<br>20–50ms</em>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header">Stressi taso</div>
-        <div class="card-body">
-          <em>Normaali</em>
-        </div>
-      </div>
-      <div class="card wide">
-        <div class="card-header">HRV Taso</div>
-        <div class="card-body">
-          <em>Normaali</em>
-        </div>
-      </div>
-    </div>
+      
+      
   </main>
 
   <script src="hrv.js"></script>

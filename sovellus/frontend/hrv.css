@@ -6,6 +6,12 @@
   box-sizing: border-box;
 }
 
+.get_user_info,
+.get_user_data,
+pre {
+  display: none;
+}
+
 html, body {
   overflow-x: hidden;
 }
@@ -142,7 +148,129 @@ body {
     font-style: italic;
   }
   
+  .buttons {
+    margin-top: 0.8rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .buttons button {
+    font-family: 'Outfit', sans-serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 0.95rem;
+    padding: 0.4rem 0.9rem;
+    background-color: #ffffff;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .buttons button:hover {
+    background-color: #f0f0f0;
+    border-color: #999;
+  }
+  
+  .buttons button:disabled {
+    background-color: #eee;
+    color: #aaa;
+    cursor: not-allowed;
+    border-color: #ddd;
+  }
 
+  #jsChart {
+    max-width: 100%;
+    width: 100%;
+    height: 400px; /* bigger */
+  }
+
+  .popup-alert {
+    position: fixed;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding: 1.2rem 2rem;
+    font-family: 'Outfit', sans-serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: #333;
+    z-index: 9999;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    animation: fadeInOut 3s ease-in-out forwards;
+    pointer-events: none;
+    text-align: center;
+    max-width: 80%;
+    line-height: 1.4;
+
+  }
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -55%);
+  }
+  10% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -45%);
+  }
+}
+  
+  
+  #calendar2 {
+    background-color: white;
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.12);
+    font-family: 'Outfit', sans-serif;
+    font-style: italic;
+    width: 100%;
+    max-width: 1000px;
+    margin: 2rem auto;
+  }
+  
+  .fc .fc-toolbar-title {
+    font-size: 1.4rem;
+    font-style: italic;
+    text-align: center;
+  }
+  
+  .fc .fc-daygrid-day-number {
+    font-size: 0.9rem;
+    font-weight: 300;
+  }
+  
+  .fc .fc-event-title {
+    font-size: 0.9rem;
+    font-style: italic;
+  }
+  
+  .fc .fc-button {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    font-family: 'Outfit', sans-serif;
+    font-style: italic;
+    color: #333;
+    font-size: 0.9rem;
+  }
+  
+
+  
   @media screen and (max-width: 768px) {
     .grid-hrv {
       grid-template-columns: 1fr;

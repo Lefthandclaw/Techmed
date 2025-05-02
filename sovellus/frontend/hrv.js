@@ -17,7 +17,6 @@ function logout() {
 const fetchData = async (url, options = {}) => {
 	try {
 		const response = await fetch(url, options);
-
 		if (!response.ok) {
 			const errorData = await response.json();
 			return { error: errorData.message || 'An error occurred' };
@@ -33,11 +32,8 @@ const getUserInfo = async () => {
 	console.log('Käyttäjän INFO Kubioksesta');
 
 	const url = 'http://localhost:3000/api/kubios-data/user-info';
-	const token = localStorage.getItem('jwtToken');
 	const headers = { Authorization: `Bearer ${token}` };
-	const options = {
-		headers: headers,
-	};
+	const options = { headers };
 	const userData = await fetchData(url, options);
 
 	if (userData.error) {
@@ -50,158 +46,15 @@ const getUserInfo = async () => {
 const getUserInfoBtn = document.querySelector('.get_user_info');
 getUserInfoBtn.addEventListener('click', getUserInfo);
 
-const drawChart = async (userData) => {
-
-
-
-	// You need to formulate data into correct structure in the BE
-	// OR you can extract the data here in FE from one or multiple sources
-	// Extract data: https://www.w3schools.com/jsref/jsref_map.asp
-
-	// Labels
-
-	const formatter = new Intl.DateTimeFormat('fi-FI', { day: 'numeric', month: 'long' });
-	const labels = userData.results.map((rivi) => formatter.format(new Date(rivi.daily_result)));
-
-	// Ilman formulointia
-	//const labels = userData.results.map((rivi) => rivi.daily_result);
-
-	// Line 1
-	const readiness = userData.results.map((rivi) => rivi.result.readiness);
-	// Line 2
-	const stressIndex = userData.results.map((rivi) => rivi.result.stress_index);
-
-	// Create the chart
-	// https://www.chartjs.org/docs/latest/charts/line.html
-	// https://www.chartjs.org/docs/latest/samples/line/line.html
-
-	const ctx = document.getElementById('jsChart');
-
-	new Chart(ctx, {
-		type: 'line',
-		data: {
-			labels: labels,
-			datasets: [
-				{
-					label: 'readiness',
-					data: readiness,
-					borderWidth: 1,
-					borderColor: 'red',
-				},
-				{
-					label: 'stress index',
-					data: stressIndex,
-					borderWidth: 1,
-					borderColor: 'blue',
-				},
-			],
-		},
-		options: {
-			responsive: true,
-			locale: 'fi-FI',
-			scales: {
-				x: {
-					title: {
-						display: true,
-						text: 'Day',
-					},
-				},
-				y: {
-					beginAtZero: true,
-					title: {
-						display: true,
-						text: 'Readiness / Stress',
-					},
-				},
-			},
-		},
-	});
-
-	// Add necessary adapters
-	// https://github.com/chartjs/awesome#adapters
-};
-
-// ---------------------------
-// Vanilla Calendar
-function drawVanillaCalendar(userData) {
-	const options = {
-		settings: {
-			lang: 'fi-FI',
-			iso8601: true
-		},
-		date: {
-			today: new Date()
-		},
-		popups: {}, // We'll fill this below based on mockdata
-		actions: {
-			clickDay(e, dates) {
-				console.log('Clicked date:', dates);
-			}
-		}
-	};
-
-	// Populate popups from userData
-	userData.results.forEach((item) => {
-		const date = item.daily_result.split('T')[0]; // Extract date only
-		options.popups[date] = {
-			html: `<div>Readiness: ${item.result.readiness}<br>Stress: ${item.result.stress_index}</div>`,
-		};
-	});
-
-	const calendar = new VanillaCalendar('#calendar', options);
-	calendar.init();
-}
-
-// ---------------------------
-// FullCalendar
-function drawFullCalendar(userData) {
-	const calendarEl = document.getElementById('calendar2');
-
-	const calendar = new FullCalendar.Calendar(calendarEl, {
-		initialView: 'dayGridMonth',
-		headerToolbar: {
-			left: 'prev,next today',
-			center: 'title',
-			right: 'dayGridMonth,timeGridWeek,timeGridDay',
-		},
-		events: userData.results.map((item) => {
-			const readiness = item.result.readiness ?? 0;
-			const stress = item.result.stress_index ?? 0;
-			return {
-				title: `R: ${readiness} | S: ${stress}`,
-				start: item.daily_result,
-				color: readiness >= 80 ? '#4CAF50' : '#F44336',
-				extendedProps: { readiness, stress },
-			};
-		}),
-		eventClick: function (info) {
-			console.log('Event clicked:', info.event.extendedProps);
-		},
-		eventContent: function (info) {
-			const { readiness } = info.event.extendedProps;
-			const emoji = readiness >= 80 ? '💪' : '⚡';
-			return {
-				html: `<div style="font-size: 11px;">${emoji} ${info.event.title}</div>`,
-			};
-		},
-	});
-
-	calendar.render();
-}
+let globalUserData = null;
 
 const getUserData = async () => {
 	console.log('Käyttäjän DATA Kubioksesta');
-	/*
-		const url = 'http://localhost:3000/api/kubios-data/user-data';
-		const token = localStorage.getItem('jwtToken');
-		const headers = { Authorization: `Bearer ${token}` };
-		const options = {
-			headers: headers,
-		};
-		const userData = await fetchData(url, options);
-	//*/
-	const url = 'mockdata.json';
-	const userData = await fetchData(url);
+
+	const url = 'http://localhost:3000/api/kubios-data/user-data';
+	const headers = { Authorization: `Bearer ${token}` };
+	const options = { headers };
+	const userData = await fetchData(url, options);
 
 	if (userData.error) {
 		console.log('Käyttäjän tietojen haku Kubioksesta epäonnistui');
@@ -209,15 +62,207 @@ const getUserData = async () => {
 	}
 	console.log(userData);
 
-	// Draw chart with chart.js
-	drawChart(userData);
+	globalUserData = userData;
 
-	// NEW: Draw calendars
+	const latest = userData.results.at(-1);
+	if (latest && latest.result) {
+		const hrv = latest.result.rmssd_ms;
+		const stress = latest.result.stress_index;
+
+		let hrvStatus = '–';
+		if (hrv < 20) hrvStatus = 'Matala';
+		else if (hrv <= 50) hrvStatus = 'Kohtalainen';
+		else if (hrv <= 100) hrvStatus = 'Hyvä';
+		else hrvStatus = 'Erittäin hyvä';
+
+		document.getElementById('hrv-value').textContent = `${hrv.toFixed(1)} ms`;
+		document.getElementById('hrv-status').textContent = hrvStatus;
+		document.getElementById('stress-level').textContent = `${stress.toFixed(1)} (indeksi)`;
+
+		const allHRV = userData.results
+			.map(r => r?.result?.rmssd_ms)
+			.filter(val => typeof val === 'number');
+		if (allHRV.length > 0) {
+			const avg = allHRV.reduce((a, b) => a + b, 0) / allHRV.length;
+			document.getElementById('hrv-avg').textContent = `${avg.toFixed(1)} ms`;
+		}
+	}
+
+	drawChart(userData);
 	drawFullCalendar(userData);
-	drawVanillaCalendar(userData);
 };
 
 const getUserDataBtn = document.querySelector('.get_user_data');
 getUserDataBtn.addEventListener('click', getUserData);
 
-// Let us try these together
+function filterByDays(data, days) {
+	if (days === 'all') return data;
+	const cutoff = new Date();
+	cutoff.setDate(cutoff.getDate() - days);
+	return data.filter(item => new Date(item.daily_result) >= cutoff);
+}
+
+function updateView(type, range) {
+	if (!globalUserData) return;
+	const filtered = filterByDays(globalUserData.results, range);
+
+	// Handle empty data case
+	if (filtered.length === 0) {
+		if (type === 'hrv') document.getElementById('hrv-value').textContent = '– ei dataa –';
+		if (type === 'avg') document.getElementById('hrv-avg').textContent = '– ei dataa –';
+		if (type === 'stress') document.getElementById('stress-level').textContent = '– ei dataa –';
+		if (type === 'status') document.getElementById('hrv-status').textContent = '– ei dataa –';
+		return;
+	}
+
+	if (type === 'hrv') {
+		const latest = filtered.at(-1);
+		document.getElementById('hrv-value').textContent = `${latest.result.rmssd_ms.toFixed(1)} ms`;
+	}
+
+	if (type === 'avg') {
+		const values = filtered.map(r => r.result.rmssd_ms).filter(n => typeof n === 'number');
+		const avg = values.reduce((a, b) => a + b, 0) / values.length;
+		document.getElementById('hrv-avg').textContent = `${avg.toFixed(1)} ms`;
+	}
+
+	if (type === 'stress') {
+		const latest = filtered.at(-1);
+		document.getElementById('stress-level').textContent = `${latest.result.stress_index.toFixed(1)} (indeksi)`;
+	}
+
+	if (type === 'status') {
+		const latest = filtered.at(-1);
+		const hrv = latest.result.rmssd_ms;
+		let status = '–';
+		if (hrv < 20) status = 'Matala';
+		else if (hrv <= 50) status = 'Kohtalainen';
+		else if (hrv <= 100) status = 'Hyvä';
+		else status = 'Erittäin hyvä';
+		document.getElementById('hrv-status').textContent = status;
+	}
+}
+
+window.updateView = updateView;
+
+let chartInstance = null;
+
+const drawChart = (userData, range = 'all') => {
+	const results = filterByDays(userData.results, range);
+
+	// 🔁 Clean chart
+	if (chartInstance) {
+		chartInstance.destroy();
+		chartInstance = null;
+	}
+
+	if (!results.length) {
+		showPopup('– ei dataa valitulla aikavälillä –');
+		return;
+	}
+
+	const formatter = new Intl.DateTimeFormat('fi-FI', { day: 'numeric', month: 'long' });
+	const labels = results.map(r => formatter.format(new Date(r.daily_result)));
+	const readiness = results.map(r => r.result.readiness);
+	const stressIndex = results.map(r => r.result.stress_index);
+
+	const ctx = document.getElementById('jsChart');
+	chartInstance = new Chart(ctx, {
+		type: 'line',
+		data: {
+			labels: labels,
+			datasets: [
+				{ label: 'readiness', data: readiness, borderWidth: 1, borderColor: 'red' },
+				{ label: 'stress index', data: stressIndex, borderWidth: 1, borderColor: 'blue' }
+			],
+		},
+		options: {
+			responsive: true,
+			locale: 'fi-FI',
+			scales: {
+				x: { title: { display: true, text: 'Päivä' } },
+				y: { beginAtZero: true, title: { display: true, text: 'Readiness / Stressi' } }
+			},
+		}
+	});
+};
+
+
+function showPopup(message) {
+	const popup = document.getElementById('popup-alert');
+	popup.textContent = message;
+	popup.style.display = 'block';
+
+	// Reset animation
+	popup.classList.remove('popup-alert');
+	void popup.offsetWidth; // force reflow
+	popup.classList.add('popup-alert');
+
+	// Hide after animation
+	setTimeout(() => {
+		popup.style.display = 'none';
+	}, 3000);
+}
+
+
+function drawFullCalendar(userData) {
+	const calendarEl = document.getElementById('calendar2');
+
+	const calendar = new FullCalendar.Calendar(calendarEl, {
+		initialView: 'dayGridMonth',
+		aspectRatio: 1.5,
+		headerToolbar: {
+			left: 'prev,next today',
+			center: 'title',
+			right: 'dayGridMonth,timeGridWeek,timeGridDay',
+		},
+		events: userData.results.map(item => {
+			const readiness = item.result.readiness ?? 0;
+			const stress = item.result.stress_index ?? 0;
+			const hrv = item.result.rmssd_ms ?? null;
+
+			return {
+				title: `HRV: ${hrv?.toFixed(1)} ms\nStressi: ${stress.toFixed(1)}`,
+				start: item.daily_result,
+				color: readiness >= 80 ? '#4CAF50' : '#F44336',
+				extendedProps: {
+					readiness,
+					stress,
+					hrv,
+				},
+			};
+		}),
+		eventClick(info) {
+			console.log('Event clicked:', info.event.extendedProps);
+		},
+		eventContent(info) {
+			const { readiness, stress, hrv } = info.event.extendedProps;
+
+			let emoji = readiness >= 80 ? '💪' : '⚡';
+			let hrvStatus = "–";
+			if (hrv !== null) {
+				if (hrv < 20) hrvStatus = "Matala";
+				else if (hrv <= 50) hrvStatus = "Kohtalainen";
+				else if (hrv <= 100) hrvStatus = "Hyvä";
+				else hrvStatus = "Erittäin hyvä";
+			}
+
+			return {
+				html: `
+					<div style="font-size: 11px;">
+						${emoji} HRV: ${hrv?.toFixed(1)} ms<br>
+						Stressi: ${stress?.toFixed(1)}<br>
+						Taso: ${hrvStatus}
+					</div>
+				`
+			};
+		},
+	});
+
+	calendar.render();
+}
+
+
+window.addEventListener('DOMContentLoaded', () => {
+	getUserData();
+});
