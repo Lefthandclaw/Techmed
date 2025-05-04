@@ -37,9 +37,9 @@
       <button class="get_user_data">Get user data</button>
 
       <div class="buttons">
-        <button onclick="drawChart(globalUserData, 7)">7 päivää</button>
-        <button onclick="drawChart(globalUserData, 30)">30 päivää</button>
-        <button onclick="drawChart(globalUserData, 'all')">Kaikki</button>
+        <button onclick="drawChart(globalUserData, 7)" data-type="chart" data-range="7">7d</button>
+        <button onclick="drawChart(globalUserData, 30)" data-type="chart" data-range="30">30d</button>
+        <button onclick="drawChart(globalUserData, 'all')" data-type="chart" data-range="all">Kaikki</button>      
       </div>
       
       <div>
@@ -52,9 +52,6 @@
       
 
       <h2>HRV kalenteri</h2>
-
-      <a href="https://fullcalendar.io/">https://fullcalendar.io/</a>
-
       <div id="calendar2" style="width: 100%;"></div>
 
 
@@ -64,9 +61,10 @@
           <div class="card-body">
             <em id="hrv-value">–</em>
             <div class="buttons">
-              <button onclick="updateView('hrv', 7)">7d</button>
-              <button onclick="updateView('hrv', 30)">30d</button>
-              <button onclick="updateView('hrv', 'all')">Kaikki</button>
+              <button onclick="updateView('hrv', 1)" data-type="hrv" data-range="1">Tänään</button>
+              <button onclick="updateView('hrv', 7)" data-type="hrv" data-range="7">7d</button>
+              <button onclick="updateView('hrv', 30)" data-type="hrv" data-range="30">30d</button>
+              <button onclick="updateView('hrv', 'all')" data-type="hrv" data-range="all">Kaikki</button>              
             </div>
           </div>
         </div>
@@ -76,9 +74,10 @@
           <div class="card-body">
             <em id="hrv-avg">–</em>
             <div class="buttons">
-              <button onclick="updateView('avg', 7)">7d</button>
-              <button onclick="updateView('avg', 30)">30d</button>
-              <button onclick="updateView('avg', 'all')">Kaikki</button>
+              <button onclick="updateView('avg', 1)" data-type="avg" data-range="1">Tänään</button>
+              <button onclick="updateView('avg', 7)" data-type="avg" data-range="7">7d</button>
+              <button onclick="updateView('avg', 30)" data-type="avg" data-range="30">30d</button>
+              <button onclick="updateView('avg', 'all')" data-type="avg" data-range="all">Kaikki</button>                        
             </div>
           </div>
         </div>
@@ -88,9 +87,10 @@
           <div class="card-body">
             <em id="stress-level">–</em>
             <div class="buttons">
-              <button onclick="updateView('stress', 7)">7d</button>
-              <button onclick="updateView('stress', 30)">30d</button>
-              <button onclick="updateView('stress', 'all')">Kaikki</button>
+              <button onclick="updateView('stress', 1)" data-type="stress" data-range="1">Tänään</button>
+              <button onclick="updateView('stress', 7)" data-type="stress" data-range="7">7d</button>
+              <button onclick="updateView('stress', 30)" data-type="stress" data-range="30">30d</button>
+              <button onclick="updateView('stress', 'all')" data-type="stress" data-range="all">Kaikki</button>              
             </div>
           </div>
         </div>
@@ -100,9 +100,10 @@
           <div class="card-body">
             <em id="hrv-status">–</em>
             <div class="buttons">
-              <button onclick="updateView('status', 7)">7d</button>
-              <button onclick="updateView('status', 30)">30d</button>
-              <button onclick="updateView('status', 'all')">Kaikki</button>
+              <button onclick="updateView('status', 1)" data-type="status" data-range="1">Tänään</button>
+              <button onclick="updateView('status', 7)" data-type="status" data-range="7">7d</button>
+              <button onclick="updateView('status', 30)" data-type="status" data-range="30">30d</button>
+              <button onclick="updateView('status', 'all')" data-type="status" data-range="all">Kaikki</button>              
             </div>
           </div>
         </div>

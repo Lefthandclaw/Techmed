@@ -30,14 +30,20 @@
 
   <main class="wrapper">
     <div class="page-header">
-      <p><em>Päivän 2.4</em></p>
+      <p id="today-date"><em>Päivän ...</em></p>
       <p><em>Harjoitukset HRV tasolle:</em></p>
+      <button id="auto-select-btn">Aseta päivän HRV-tason mukaan</button>
       <select id="hrv-level">
-        <option value="normaali" selected>Normaali</option>
         <option value="matala">Matala</option>
+        <option value="kohtalainen" selected>Kohtalainen</option>
         <option value="hyvä">Hyvä</option>
         <option value="erittäin">Erittäin hyvä</option>
       </select>
+    </div>
+
+    <div id="popup" class="popup hidden">
+      <p id="popup-message"></p>
+      <button onclick="closePopup()">OK</button>
     </div>
 
     <div class="exercise-table" id="exercise-container">

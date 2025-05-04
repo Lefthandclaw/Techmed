@@ -6,12 +6,17 @@
   box-sizing: border-box;
 }
 
+html, body {
+  overflow-x: hidden;
+}
+
 body {
   font-family: 'Outfit', sans-serif;
   background-color: #f9f9f9;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  width: 100%;
 }
 
 .navbar {
@@ -66,6 +71,7 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 2rem;
+  width: 100%;
 }
 
 .page-header {
@@ -87,25 +93,23 @@ body {
 }
 
 .exercise-table {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 2rem;
-    width: 200%;
-  }
-  
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+}
 
 .exercise-column {
-    flex: 1 1 45%;
-    max-width: 440px;
-    min-width: 300px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.08);
-    display: flex;
-    flex-direction: column;
-  }
-  
+  flex: 1 1 45%;
+  max-width: 440px;
+  min-width: 300px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+}
 
 .exercise-title {
   display: flex;
@@ -146,5 +150,82 @@ audio {
     flex-direction: column;
     gap: 0.5rem;
     align-items: flex-start;
+  }
+}
+
+.hrv-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+#auto-select-btn {
+  background-color: #4484c9;
+  color: white;
+  border: none;
+  padding: 0.4rem 1rem;
+  font-size: 1rem;
+  font-family: 'Outfit', sans-serif;
+  font-style: italic;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+#auto-select-btn:hover {
+  background-color: #376699;
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  font-family: 'Outfit', sans-serif;
+  font-style: italic;
+  z-index: 999;
+  display: none;
+  max-width: 90%;
+  width: 320px;
+}
+
+.popup.show {
+  display: block;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.popup button {
+  margin-top: 1.2rem;
+  padding: 0.4rem 1rem;
+  background-color: #4484c9;
+  color: white;
+  font-style: italic;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.popup button:hover {
+  background-color: #376699;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
   }
 }

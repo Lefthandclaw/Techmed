@@ -141,7 +141,7 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.12);
     border-radius: 10px;
     background: white;
@@ -312,3 +312,8 @@ body {
     }
   }
   
+  .buttons button.active {
+    background-color: #4484c9;
+    color: white;
+    border-color: #4484c9;
+  }

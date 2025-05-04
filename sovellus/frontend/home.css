@@ -15,53 +15,50 @@ body {
 }
 
 .navbar {
-    width: 100%;
-    padding: 1.2rem 2rem;
-    background-color: #fff;
-    border-bottom: 1px solid #ccc;
-  
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-  
-  .nav-left {
-    font-size: 1.4rem;
-    font-weight: 400;
-    font-style: italic;
-  }
-  
-  .nav-center {
-    list-style: none;
-    display: flex;
-    gap: 2.5rem;
-    justify-content: center;
-    flex: 1;
-    padding: 0;
-    font-size: 1.1rem;
-    font-weight: 400;
-    font-style: italic;
-  }
-  
-  .nav-center a {
-    text-decoration: none;
-    color: black;
-  }
-  
-  .nav-center .active {
-    text-decoration: underline;
-  }
-  
-  .nav-right a {
-    font-size: 1.1rem;
-    font-style: italic;
-    font-weight: 400;
-    text-decoration: underline;
-    color: black;
-  }
-  
-  
+  width: 100%;
+  padding: 1.2rem 2rem;
+  background-color: #fff;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.nav-left {
+  font-size: 1.4rem;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.nav-center {
+  list-style: none;
+  display: flex;
+  gap: 2.5rem;
+  justify-content: center;
+  flex: 1;
+  padding: 0;
+  font-size: 1.1rem;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.nav-center a {
+  text-decoration: none;
+  color: black;
+}
+
+.nav-center .active {
+  text-decoration: underline;
+}
+
+.nav-right a {
+  font-size: 1.1rem;
+  font-style: italic;
+  font-weight: 400;
+  text-decoration: underline;
+  color: black;
+}
 
 .home-wrapper {
   width: 100%;
@@ -74,7 +71,21 @@ body {
   align-items: center;
 }
 
+.card-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
 .card {
+  flex: 1 1 0;
+  max-width: 300px;
+  min-width: 250px;
   background: #fff;
   padding: 2rem;
   border-radius: 12px;
@@ -83,8 +94,6 @@ body {
   font-weight: 300;
   font-size: 1.1rem;
   line-height: 1.8rem;
-  width: 100%;
-  max-width: 280px;
   text-align: left;
 }
 
@@ -95,49 +104,31 @@ body {
 .card.full-width {
   max-width: 800px;
   text-align: center;
-    font-size: 1.3rem;
+  font-size: 1.3rem;
 }
 
 .card.center.highlight {
-  font-size: 1.3rem;
-  line-height: 2rem;
-  padding: 2.5rem;
-  max-width: 320px
-  ;
+  font-size: 1.1rem;
+  padding: 2rem;
+  max-width: 300px;
 }
 
-.card-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2rem;
-  width: 100%;
-}
-
-@media screen and (max-width: 768px) {
-  .navbar-inner {
+@media screen and (max-width: 850px) {
+  .card-row {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-
-  .nav-links {
+    align-items: center;
     flex-wrap: wrap;
-    gap: 1rem;
   }
 
   .card {
     max-width: 90%;
+    height: auto;
     font-size: 1rem;
   }
 
   .card.center.highlight {
     font-size: 1.15rem;
     max-width: 95%;
-  }
-
-  .card-row {
-    flex-direction: column;
-    align-items: center;
+    height: auto;
   }
 }

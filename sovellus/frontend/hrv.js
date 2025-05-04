@@ -66,30 +66,45 @@ const getUserData = async () => {
 
 	const latest = userData.results.at(-1);
 	if (latest && latest.result) {
-		const hrv = latest.result.rmssd_ms;
-		const stress = latest.result.stress_index;
-
+	  const hrv = latest.result.rmssd_ms;
+	  const stress = latest.result.stress_index;
+	
+	  const latestDate = new Date(latest.daily_result).toDateString();
+	  const today = new Date().toDateString();
+	
+	  if (latestDate === today) {
 		let hrvStatus = '–';
 		if (hrv < 20) hrvStatus = 'Matala';
 		else if (hrv <= 50) hrvStatus = 'Kohtalainen';
 		else if (hrv <= 100) hrvStatus = 'Hyvä';
 		else hrvStatus = 'Erittäin hyvä';
-
+	
 		document.getElementById('hrv-value').textContent = `${hrv.toFixed(1)} ms`;
 		document.getElementById('hrv-status').textContent = hrvStatus;
 		document.getElementById('stress-level').textContent = `${stress.toFixed(1)} (indeksi)`;
-
-		const allHRV = userData.results
-			.map(r => r?.result?.rmssd_ms)
-			.filter(val => typeof val === 'number');
-		if (allHRV.length > 0) {
-			const avg = allHRV.reduce((a, b) => a + b, 0) / allHRV.length;
-			document.getElementById('hrv-avg').textContent = `${avg.toFixed(1)} ms`;
-		}
+	
+		const shortStatus = hrvStatus.split(" ")[0].toLowerCase();
+		localStorage.setItem("todayHRVStatus", shortStatus);
+		localStorage.setItem("todayHRVDate", today);
+	  }
+	
+	  const allHRV = userData.results
+		.map(r => r?.result?.rmssd_ms)
+		.filter(val => typeof val === 'number');
+	  if (allHRV.length > 0) {
+		const avg = allHRV.reduce((a, b) => a + b, 0) / allHRV.length;
+		document.getElementById('hrv-avg').textContent = `${avg.toFixed(1)} ms`;
+	  }
 	}
+	
 
 	drawChart(userData);
 	drawFullCalendar(userData);
+
+	updateView('hrv', 'all');
+	updateView('avg', 'all');
+	updateView('stress', 'all');
+	updateView('status', 'all');
 };
 
 const getUserDataBtn = document.querySelector('.get_user_data');
@@ -104,44 +119,54 @@ function filterByDays(data, days) {
 
 function updateView(type, range) {
 	if (!globalUserData) return;
+  
+	// Highlight the active button
+	document.querySelectorAll(`.buttons button[data-type="${type}"]`).forEach(btn => {
+	  if (btn.getAttribute("data-range") == range) {
+		btn.classList.add("active");
+	  } else {
+		btn.classList.remove("active");
+	  }
+	});
+  
 	const filtered = filterByDays(globalUserData.results, range);
-
-	// Handle empty data case
+  
 	if (filtered.length === 0) {
-		if (type === 'hrv') document.getElementById('hrv-value').textContent = '– ei dataa –';
-		if (type === 'avg') document.getElementById('hrv-avg').textContent = '– ei dataa –';
-		if (type === 'stress') document.getElementById('stress-level').textContent = '– ei dataa –';
-		if (type === 'status') document.getElementById('hrv-status').textContent = '– ei dataa –';
-		return;
+	  if (type === 'hrv') document.getElementById('hrv-value').textContent = '– ei dataa –';
+	  if (type === 'avg') document.getElementById('hrv-avg').textContent = '– ei dataa –';
+	  if (type === 'stress') document.getElementById('stress-level').textContent = '– ei dataa –';
+	  if (type === 'status') document.getElementById('hrv-status').textContent = '– ei dataa –';
+	  return;
 	}
-
+  
 	if (type === 'hrv') {
-		const latest = filtered.at(-1);
-		document.getElementById('hrv-value').textContent = `${latest.result.rmssd_ms.toFixed(1)} ms`;
+	  const latest = filtered.at(-1);
+	  document.getElementById('hrv-value').textContent = `${latest.result.rmssd_ms.toFixed(1)} ms`;
 	}
-
+  
 	if (type === 'avg') {
-		const values = filtered.map(r => r.result.rmssd_ms).filter(n => typeof n === 'number');
-		const avg = values.reduce((a, b) => a + b, 0) / values.length;
-		document.getElementById('hrv-avg').textContent = `${avg.toFixed(1)} ms`;
+	  const values = filtered.map(r => r.result.rmssd_ms).filter(n => typeof n === 'number');
+	  const avg = values.reduce((a, b) => a + b, 0) / values.length;
+	  document.getElementById('hrv-avg').textContent = `${avg.toFixed(1)} ms`;
 	}
-
+  
 	if (type === 'stress') {
-		const latest = filtered.at(-1);
-		document.getElementById('stress-level').textContent = `${latest.result.stress_index.toFixed(1)} (indeksi)`;
+	  const latest = filtered.at(-1);
+	  document.getElementById('stress-level').textContent = `${latest.result.stress_index.toFixed(1)} (indeksi)`;
 	}
-
+  
 	if (type === 'status') {
-		const latest = filtered.at(-1);
-		const hrv = latest.result.rmssd_ms;
-		let status = '–';
-		if (hrv < 20) status = 'Matala';
-		else if (hrv <= 50) status = 'Kohtalainen';
-		else if (hrv <= 100) status = 'Hyvä';
-		else status = 'Erittäin hyvä';
-		document.getElementById('hrv-status').textContent = status;
+	  const latest = filtered.at(-1);
+	  const hrv = latest.result.rmssd_ms;
+	  let status = '–';
+	  if (hrv < 20) status = 'Matala';
+	  else if (hrv <= 50) status = 'Kohtalainen';
+	  else if (hrv <= 100) status = 'Hyvä';
+	  else status = 'Erittäin hyvä';
+	  document.getElementById('hrv-status').textContent = status;
 	}
-}
+  }
+  
 
 window.updateView = updateView;
 
@@ -149,6 +174,15 @@ let chartInstance = null;
 
 const drawChart = (userData, range = 'all') => {
 	const results = filterByDays(userData.results, range);
+
+	document.querySelectorAll(`.buttons button[data-type="chart"]`).forEach(btn => {
+		if (btn.getAttribute("data-range") == range) {
+		btn.classList.add("active");
+		} else {
+		btn.classList.remove("active");
+		}
+	});
+  
 
 	// 🔁 Clean chart
 	if (chartInstance) {
@@ -185,6 +219,7 @@ const drawChart = (userData, range = 'all') => {
 			},
 		}
 	});
+	
 };
 
 
