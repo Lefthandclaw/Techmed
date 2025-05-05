@@ -120,7 +120,6 @@ function filterByDays(data, days) {
 function updateView(type, range) {
 	if (!globalUserData) return;
   
-	// Highlight the active button
 	document.querySelectorAll(`.buttons button[data-type="${type}"]`).forEach(btn => {
 	  if (btn.getAttribute("data-range") == range) {
 		btn.classList.add("active");
@@ -184,7 +183,6 @@ const drawChart = (userData, range = 'all') => {
 	});
   
 
-	// 🔁 Clean chart
 	if (chartInstance) {
 		chartInstance.destroy();
 		chartInstance = null;
@@ -228,12 +226,10 @@ function showPopup(message) {
 	popup.textContent = message;
 	popup.style.display = 'block';
 
-	// Reset animation
 	popup.classList.remove('popup-alert');
-	void popup.offsetWidth; // force reflow
+	void popup.offsetWidth;
 	popup.classList.add('popup-alert');
 
-	// Hide after animation
 	setTimeout(() => {
 		popup.style.display = 'none';
 	}, 3000);
