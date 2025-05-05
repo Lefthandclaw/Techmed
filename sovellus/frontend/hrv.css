@@ -317,3 +317,12 @@ body {
     color: white;
     border-color: #4484c9;
   }
+
+  h2 {
+    font-family: 'Outfit', sans-serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    font-weight: 400;
+    text-align: center;
+    margin-top: 2rem;
+  }

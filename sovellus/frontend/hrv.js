@@ -301,3 +301,7 @@ function drawFullCalendar(userData) {
 window.addEventListener('DOMContentLoaded', () => {
 	getUserData();
 });
+
+function scrollToBottom() {
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  }
