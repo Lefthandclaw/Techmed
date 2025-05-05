@@ -175,7 +175,7 @@ const drawChart = (userData, range = 'all') => {
   const results = filterByDays(userData.results, range).filter(r => {
     const validDate = r.daily_result && !isNaN(new Date(r.daily_result));
     const res = r.result || {};
-    const hasData = ['rmssd_ms', 'readiness', 'stress_index', 'mean_hr_bpm', 'sdnn_ms']
+    const hasData = ['rmssd_ms', 'readiness', 'stress_index', 'mean_hr_bpm']
       .some(key => typeof res[key] === 'number');
     return validDate && hasData;
   });
@@ -208,7 +208,6 @@ const drawChart = (userData, range = 'all') => {
   const readiness = results.map(r => r.result?.readiness ?? null);
   const stress = results.map(r => r.result?.stress_index ?? null);
   const heartRate = results.map(r => r.result?.mean_hr_bpm ?? null);
-  const sdnn = results.map(r => r.result?.sdnn_ms ?? null);
 
   const ctx = document.getElementById('jsChart');
   chartInstance = new Chart(ctx, {
@@ -220,7 +219,6 @@ const drawChart = (userData, range = 'all') => {
         { label: 'Valmiustaso', data: readiness, borderColor: '#52b788', borderWidth: 1 },
         { label: 'Stressi-indeksi', data: stress, borderColor: '#ef476f', borderWidth: 1 },
         { label: 'Syke (BPM)', data: heartRate, borderColor: '#ff9f1c', borderWidth: 1 },
-        { label: 'HRV (SDNN)', data: sdnn, borderColor: '#8338ec', borderWidth: 1 }
       ]
     },
     options: {
