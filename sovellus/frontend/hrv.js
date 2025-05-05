@@ -256,10 +256,8 @@ function showPopup(message) {
 function drawFullCalendar(userData) {
 	const calendarEl = document.getElementById('calendar2');
 
-	// Finnish weekday abbreviations: ma, ti, ke, to, pe, la, su
-	const finnishWeekdays = ['su', 'ma', 'ti', 'ke', 'to', 'pe', 'la'];
-
 	const calendar = new FullCalendar.Calendar(calendarEl, {
+		locale: 'fi',
 		initialView: 'dayGridMonth',
 		aspectRatio: 1.5,
 		headerToolbar: {
@@ -267,11 +265,8 @@ function drawFullCalendar(userData) {
 			center: 'title',
 			right: 'dayGridMonth,timeGridWeek,timeGridDay',
 		},
-		titleFormat: { year: 'numeric', month: 'numeric' }, // e.g. 5.2024
-		dayHeaderContent: (args) => {
-			// args.date.getDay() returns 0–6 (Sun–Sat), so we map to Finnish
-			return finnishWeekdays[args.date.getDay()];
-		},
+		titleFormat: { year: 'numeric', month: 'numeric' },
+		dayHeaderFormat: { weekday: 'long' },
 		events: userData.results.map(item => {
 			const readiness = item.result.readiness ?? 0;
 			const stress = item.result.stress_index ?? 0;
@@ -281,11 +276,7 @@ function drawFullCalendar(userData) {
 				title: `HRV: ${hrv?.toFixed(1)} ms\nStressi: ${stress.toFixed(1)}`,
 				start: item.daily_result,
 				color: readiness >= 80 ? '#4CAF50' : '#F44336',
-				extendedProps: {
-					readiness,
-					stress,
-					hrv,
-				},
+				extendedProps: { readiness, stress, hrv },
 			};
 		}),
 		eventClick(info) {
@@ -293,8 +284,7 @@ function drawFullCalendar(userData) {
 		},
 		eventContent(info) {
 			const { readiness, stress, hrv } = info.event.extendedProps;
-
-			let emoji = readiness >= 80 ? '💪' : '⚡';
+			let emoji = readiness >= 80 ? '' : '';
 			let hrvStatus = "–";
 			if (hrv !== null) {
 				if (hrv < 20) hrvStatus = "Matala";
@@ -302,7 +292,6 @@ function drawFullCalendar(userData) {
 				else if (hrv <= 100) hrvStatus = "Hyvä";
 				else hrvStatus = "Erittäin hyvä";
 			}
-
 			return {
 				html: `
 					<div style="font-size: 11px;">
