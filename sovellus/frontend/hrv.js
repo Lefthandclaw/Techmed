@@ -172,53 +172,70 @@ window.updateView = updateView;
 let chartInstance = null;
 
 const drawChart = (userData, range = 'all') => {
-	const results = filterByDays(userData.results, range);
+  const results = filterByDays(userData.results, range).filter(r => {
+    const validDate = r.daily_result && !isNaN(new Date(r.daily_result));
+    const res = r.result || {};
+    const hasData = ['rmssd_ms', 'readiness', 'stress_index', 'mean_hr_bpm', 'sdnn_ms']
+      .some(key => typeof res[key] === 'number');
+    return validDate && hasData;
+  });
 
-	document.querySelectorAll(`.buttons button[data-type="chart"]`).forEach(btn => {
-		if (btn.getAttribute("data-range") == range) {
-		btn.classList.add("active");
-		} else {
-		btn.classList.remove("active");
-		}
-	});
-  
+  document.querySelectorAll('.buttons button[data-type="chart"]').forEach(btn => {
+    btn.classList.remove('active');
+    if (btn.getAttribute('data-range') === String(range)) {
+      btn.classList.add('active');
+    }
+  });
 
-	if (chartInstance) {
-		chartInstance.destroy();
-		chartInstance = null;
-	}
+  if (chartInstance) {
+    chartInstance.destroy();
+    chartInstance = null;
+  }
 
-	if (!results.length) {
-		showPopup('– ei dataa valitulla aikavälillä –');
-		return;
-	}
+  if (!results.length) {
+    showPopup('– ei dataa valitulla aikavälillä –');
+    return;
+  }
 
-	const formatter = new Intl.DateTimeFormat('fi-FI', { day: 'numeric', month: 'long' });
-	const labels = results.map(r => formatter.format(new Date(r.daily_result)));
-	const readiness = results.map(r => r.result.readiness);
-	const stressIndex = results.map(r => r.result.stress_index);
+  const formatter = new Intl.DateTimeFormat('fi-FI', {
+    day: 'numeric',
+    month: 'numeric',
+    year: 'numeric'
+  });
 
-	const ctx = document.getElementById('jsChart');
-	chartInstance = new Chart(ctx, {
-		type: 'line',
-		data: {
-			labels: labels,
-			datasets: [
-				{ label: 'readiness', data: readiness, borderWidth: 1, borderColor: 'red' },
-				{ label: 'stress index', data: stressIndex, borderWidth: 1, borderColor: 'blue' }
-			],
-		},
-		options: {
-			responsive: true,
-			locale: 'fi-FI',
-			scales: {
-				x: { title: { display: true, text: 'Päivä' } },
-				y: { beginAtZero: true, title: { display: true, text: 'Readiness / Stressi' } }
-			},
-		}
-	});
-	
+  const labels = results.map(r => formatter.format(new Date(r.daily_result)));
+  const rmssd = results.map(r => r.result?.rmssd_ms ?? null);
+  const readiness = results.map(r => r.result?.readiness ?? null);
+  const stress = results.map(r => r.result?.stress_index ?? null);
+  const heartRate = results.map(r => r.result?.mean_hr_bpm ?? null);
+  const sdnn = results.map(r => r.result?.sdnn_ms ?? null);
+
+  const ctx = document.getElementById('jsChart');
+  chartInstance = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [
+        { label: 'HRV (RMSSD)', data: rmssd, borderColor: '#0077b6', borderWidth: 1 },
+        { label: 'Valmiustaso', data: readiness, borderColor: '#52b788', borderWidth: 1 },
+        { label: 'Stressi-indeksi', data: stress, borderColor: '#ef476f', borderWidth: 1 },
+        { label: 'Syke (BPM)', data: heartRate, borderColor: '#ff9f1c', borderWidth: 1 },
+        { label: 'HRV (SDNN)', data: sdnn, borderColor: '#8338ec', borderWidth: 1 }
+      ]
+    },
+    options: {
+      responsive: true,
+      locale: 'fi-FI',
+      interaction: {
+        mode: 'index',
+        intersect: false
+      },
+      
+    }
+  });
 };
+
+
 
 
 function showPopup(message) {
@@ -239,6 +256,9 @@ function showPopup(message) {
 function drawFullCalendar(userData) {
 	const calendarEl = document.getElementById('calendar2');
 
+	// Finnish weekday abbreviations: ma, ti, ke, to, pe, la, su
+	const finnishWeekdays = ['su', 'ma', 'ti', 'ke', 'to', 'pe', 'la'];
+
 	const calendar = new FullCalendar.Calendar(calendarEl, {
 		initialView: 'dayGridMonth',
 		aspectRatio: 1.5,
@@ -246,6 +266,11 @@ function drawFullCalendar(userData) {
 			left: 'prev,next today',
 			center: 'title',
 			right: 'dayGridMonth,timeGridWeek,timeGridDay',
+		},
+		titleFormat: { year: 'numeric', month: 'numeric' }, // e.g. 5.2024
+		dayHeaderContent: (args) => {
+			// args.date.getDay() returns 0–6 (Sun–Sat), so we map to Finnish
+			return finnishWeekdays[args.date.getDay()];
 		},
 		events: userData.results.map(item => {
 			const readiness = item.result.readiness ?? 0;
@@ -292,6 +317,7 @@ function drawFullCalendar(userData) {
 
 	calendar.render();
 }
+
 
 
 window.addEventListener('DOMContentLoaded', () => {
