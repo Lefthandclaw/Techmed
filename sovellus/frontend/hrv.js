@@ -115,6 +115,7 @@ const getUserData = async () => {
 	updateView('status', 'all');
 	updateView('stressAvg', 'all');
 	updateView('statusAvg', 'all');
+	updateView('readiness', 'all');
 	updateView('readinessAvg', 'all');
 	updateView('bpmAvg', 1);
 
@@ -151,6 +152,9 @@ function updateView(type, range) {
 	  if (type === 'status') document.getElementById('hrv-status').textContent = '– ei dataa –';
 	  if (type === 'stressAvg') document.getElementById('stress-avg').textContent = '– ei dataa –';
 	  if (type === 'statusAvg') document.getElementById('hrv-status-avg').textContent = '– ei dataa –';
+	  if (type === 'readiness') document.getElementById('readiness-value').textContent = '– ei dataa –';
+	  if (type === 'readinessAvg') document.getElementById('readiness-avg').textContent = '– ei dataa –';
+	  if (type === 'bpmAvg') document.getElementById('bpm-avg').textContent = '– ei dataa –';
 	  return;
 	}
   
@@ -200,6 +204,12 @@ function updateView(type, range) {
   
 	  document.getElementById('hrv-status-avg').textContent = avgStatus;
 	}
+
+	if (type === 'readiness') {
+		const latest = filtered.at(-1);
+		document.getElementById('readiness-value').textContent = latest.result.readiness != null ? `${latest.result.readiness.toFixed(1)} %` : '– ei dataa –';
+	}
+
 	if (type === 'readinessAvg') {
 		const values = filtered.map(r => r.result.readiness).filter(n => typeof n === 'number');
 		const avg = values.reduce((a, b) => a + b, 0) / values.length;
