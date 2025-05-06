@@ -73,7 +73,8 @@ const getUserData = async () => {
 	  const today = new Date().toDateString();
 	
 	  if (latestDate === today) {
-		let hrvStatus = '–';
+		document.getElementById('hrv-date').textContent = `Tallennettu: ${latest.daily_result}`;
+			  let hrvStatus = '–';
 		if (hrv < 20) hrvStatus = 'Matala';
 		else if (hrv <= 50) hrvStatus = 'Kohtalainen';
 		else if (hrv <= 100) hrvStatus = 'Hyvä';
@@ -81,7 +82,13 @@ const getUserData = async () => {
 	
 		document.getElementById('hrv-value').textContent = `${hrv.toFixed(1)} ms`;
 		document.getElementById('hrv-status').textContent = hrvStatus;
+		document.getElementById('hrv-status-date').textContent = `Tallennettu: ${latest.daily_result}`;
 		document.getElementById('stress-level').textContent = `${stress.toFixed(1)} (indeksi)`;
+		document.getElementById('stress-date').textContent = `Tallennettu: ${latest.daily_result}`;
+		document.getElementById('readiness-value').textContent = `${latest.result.readiness.toFixed(1)} %`;
+		document.getElementById('readiness-date').textContent = `Tallennettu: ${latest.daily_result}`;
+	  
+
 	
 		const shortStatus = hrvStatus.split(" ")[0].toLowerCase();
 		localStorage.setItem("todayHRVStatus", shortStatus);
@@ -95,6 +102,7 @@ const getUserData = async () => {
 		const avg = allHRV.reduce((a, b) => a + b, 0) / allHRV.length;
 		document.getElementById('hrv-avg').textContent = `${avg.toFixed(1)} ms`;
 	  }
+	  
 	}
 	
 
@@ -105,6 +113,12 @@ const getUserData = async () => {
 	updateView('avg', 'all');
 	updateView('stress', 'all');
 	updateView('status', 'all');
+	updateView('stressAvg', 'all');
+	updateView('statusAvg', 'all');
+	updateView('readinessAvg', 'all');
+	updateView('bpmAvg', 1);
+
+
 };
 
 const getUserDataBtn = document.querySelector('.get_user_data');
@@ -135,6 +149,8 @@ function updateView(type, range) {
 	  if (type === 'avg') document.getElementById('hrv-avg').textContent = '– ei dataa –';
 	  if (type === 'stress') document.getElementById('stress-level').textContent = '– ei dataa –';
 	  if (type === 'status') document.getElementById('hrv-status').textContent = '– ei dataa –';
+	  if (type === 'stressAvg') document.getElementById('stress-avg').textContent = '– ei dataa –';
+	  if (type === 'statusAvg') document.getElementById('hrv-status-avg').textContent = '– ei dataa –';
 	  return;
 	}
   
@@ -164,7 +180,40 @@ function updateView(type, range) {
 	  else status = 'Erittäin hyvä';
 	  document.getElementById('hrv-status').textContent = status;
 	}
+  
+	if (type === 'stressAvg') {
+	  const values = filtered.map(r => r.result.stress_index).filter(n => typeof n === 'number');
+	  const avg = values.reduce((a, b) => a + b, 0) / values.length;
+	  document.getElementById('stress-avg').textContent = `${avg.toFixed(1)} (indeksi)`;
+  
+	}
+  
+	if (type === 'statusAvg') {
+	  const values = filtered.map(r => r.result.rmssd_ms).filter(n => typeof n === 'number');
+	  const avg = values.reduce((a, b) => a + b, 0) / values.length;
+  
+	  let avgStatus = '–';
+	  if (avg < 20) avgStatus = 'Matala';
+	  else if (avg <= 50) avgStatus = 'Kohtalainen';
+	  else if (avg <= 100) avgStatus = 'Hyvä';
+	  else avgStatus = 'Erittäin hyvä';
+  
+	  document.getElementById('hrv-status-avg').textContent = avgStatus;
+	}
+	if (type === 'readinessAvg') {
+		const values = filtered.map(r => r.result.readiness).filter(n => typeof n === 'number');
+		const avg = values.reduce((a, b) => a + b, 0) / values.length;
+		document.getElementById('readiness-avg').textContent = `${avg.toFixed(1)} %`;
+	}
+	  
+	if (type === 'bpmAvg') {
+		const values = filtered.map(r => r.result.mean_hr_bpm).filter(n => typeof n === 'number');
+		const avg = values.reduce((a, b) => a + b, 0) / values.length;
+		document.getElementById('bpm-avg').textContent = `${avg.toFixed(1)} bpm`;
+	  }
+	  
   }
+  
   
 
 window.updateView = updateView;
@@ -269,14 +318,23 @@ function drawFullCalendar(userData) {
 			const readiness = item.result.readiness ?? 0;
 			const stress = item.result.stress_index ?? 0;
 			const hrv = item.result.rmssd_ms ?? null;
-
+		
+			let color = '#ccc';
+			if (hrv !== null) {
+				if (hrv < 20) color = '#ef476f';
+				else if (hrv <= 50) color = '#0077b6';
+				else if (hrv <= 100) color = '#fabc65';
+				else color = '#52b788';
+			}
+		
 			return {
-				title: `HRV: ${hrv?.toFixed(1)} ms\nStressi: ${stress.toFixed(1)}`,
+				title: `HRV: ${hrv?.toFixed(1)} ms\nStressi: ${stress.toFixed(1)}\nValmius: ${readiness?.toFixed(1)}%`,
 				start: item.daily_result,
-				color: readiness >= 80 ? '#4CAF50' : '#F44336',
+				color,
 				extendedProps: { readiness, stress, hrv },
 			};
 		}),
+		
 		eventClick(info) {
 			console.log('Event clicked:', info.event.extendedProps);
 		},
@@ -295,7 +353,8 @@ function drawFullCalendar(userData) {
 					<div style="font-size: 11px;">
 						${emoji} HRV: ${hrv?.toFixed(1)} ms<br>
 						Stressi: ${stress?.toFixed(1)}<br>
-						Taso: ${hrvStatus}
+						Valmius: ${readiness?.toFixed(1)}%<br>
+						Taso: ${hrvStatus}<br>
 					</div>
 				`
 			};

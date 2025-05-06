@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
       select.value = savedStatus;
       updateExercises();
     } else {
-      showPopup("Päivän HRV-tasoa ei löytynyt. Valitse itse sopiva HRV-taso.");
+      showPopup("Päivän HRV-tasoa ei löytynyt. Käy ensin HRV sivulla.");
     }
   });
 
