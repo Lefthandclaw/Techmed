@@ -5,7 +5,7 @@ import authRouter from './routes/auth-router.js';
 import entryRouter from './routes/entry-router.js';
 import {errorHandler, notFoundHandler} from './middlewares/error-handler.js';
 import kubiosRouter from './routes/kubios-router.js';
-const hostname = '0.0.0.0';
+const hostname = '127.0.0.1';
 const app = express();
 const port = 3000;
 
