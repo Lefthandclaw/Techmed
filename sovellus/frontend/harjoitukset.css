@@ -34,6 +34,7 @@ body {
 .nav-left {
   font-size: 1.4rem;
   font-weight: 400;
+  font-style: italic;
 }
 
 .nav-center {
@@ -135,24 +136,6 @@ audio {
   border-radius: 6px;
 }
 
-@media screen and (max-width: 768px) {
-  .exercise-table {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .nav-center {
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  .exercise-title {
-    flex-direction: column;
-    gap: 0.5rem;
-    align-items: flex-start;
-  }
-}
-
 .hrv-controls {
   display: flex;
   flex-wrap: wrap;
@@ -227,5 +210,30 @@ audio {
   to {
     opacity: 1;
     transform: translate(-50%, -50%);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .exercise-table {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nav-center {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .exercise-title {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
   }
 }
