@@ -101,7 +101,8 @@ document.addEventListener("DOMContentLoaded", () => {
   autoButton.addEventListener("click", () => {
     const savedStatus = localStorage.getItem("todayHRVStatus");
     const savedDate = localStorage.getItem("todayHRVDate");
-    const today = new Date().toDateString();
+  
+    const today = new Date().toISOString().split("T")[0]; // e.g., "2024-05-07"
   
     const isToday = savedDate === today;
   
@@ -112,6 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
       showPopup("Päivän HRV-tasoa ei löytynyt. Käy ensin HRV sivulla.");
     }
   });
+  
 
   select.addEventListener("change", updateExercises);
   updateExercises();
