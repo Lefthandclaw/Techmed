@@ -1,8 +1,8 @@
-import express from 'express';
+import express from "express";
 // import {getMe, postLogin} from '../controllers/auth-controller.js';
-import {getMe, login,} from '../controllers/kubios-auth-controller.js';
-import {adminLogin } from '../controllers/auth-controller.js';
-import {authenticateToken} from '../middlewares/authentication.js';
+import { getMe, login } from "../controllers/kubios-auth-controller.js";
+import { adminLogin } from "../controllers/auth-controller.js";
+import { authenticateToken } from "../middlewares/authentication.js";
 
 const authRouter = express.Router();
 
@@ -38,15 +38,13 @@ const authRouter = express.Router();
  * @apiSuccess {String} user.user_level User's user level
  * @apiSuccess {String} token Authentication token
  */
-authRouter.post('/login', login);
-
+authRouter.post("/login", login);
 
 /**
  * Route for admin login
  * @api {post} /api/auth/admin_login Admin login
  */
-authRouter.post('/admin_login', adminLogin);
-
+authRouter.post("/admin_login", adminLogin);
 
 /**
  * @api {get} /auth/me Request information about current user
@@ -80,6 +78,6 @@ authRouter.post('/admin_login', adminLogin);
  *       "message": "invalid token"
  *     }
  */
-authRouter.get('/me/', authenticateToken, getMe);
+authRouter.get("/me/", authenticateToken, getMe);
 
 export default authRouter;

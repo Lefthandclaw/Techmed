@@ -1,4 +1,4 @@
-import {validationResult} from 'express-validator';
+import { validationResult } from "express-validator";
 
 /**
  * Error generator function
@@ -38,19 +38,19 @@ const errorHandler = (err, req, res, next) => {
  * @return {*} next function call
  */
 const validationErrorHandler = (req, res, next) => {
-  console.log('CALLED validationErrorHandler');
-  console.log('request', req.body);
-  const errors = validationResult(req, {strictParams: ['body']});
+  console.log("CALLED validationErrorHandler");
+  console.log("request", req.body);
+  const errors = validationResult(req, { strictParams: ["body"] });
   if (!errors.isEmpty()) {
     // console.log('VALIDATION ERRORS', errors.array({onlyFirstError: true}).map((error) => {
     //   return {field: error.path, message: error.msg};
     // }));
-    const error = new Error('Bad Request');
+    const error = new Error("Bad Request");
     error.status = 400;
-    error.errors = errors.array({onlyFirstError: true}).map((error) => {
-      return {field: error.path, message: error.msg};
+    error.errors = errors.array({ onlyFirstError: true }).map((error) => {
+      return { field: error.path, message: error.msg };
     });
-    console.log('ERRORS', error);
+    console.log("ERRORS", error);
     return next(error);
   }
   next();
@@ -76,4 +76,4 @@ const validationErrorHandler = (req, res, next) => {
 //   next();
 // };
 
-export {notFoundHandler, errorHandler, validationErrorHandler, customError};
+export { notFoundHandler, errorHandler, validationErrorHandler, customError };

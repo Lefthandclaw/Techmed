@@ -1,29 +1,28 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fi">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Kirjaudu sisään</title>
-  <link rel="stylesheet" href="index.css" />
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kirjaudu sisään</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div id="login-section" class="login-container">
+      <h1 class="title">Kirjaudu sisään</h1>
 
-  <div id="login-section" class="login-container">
-    <h1 class="title">Kirjaudu sisään</h1>
+      <div id="login-alert" class="alert" style="display: none"></div>
 
-    <div id="login-alert" class="alert" style="display: none;"></div>
+      <form id="login-form" class="login-form">
+        <label for="username">Käyttäjänimi:</label>
+        <input type="text" id="username" name="username" required />
 
-    <form id="login-form" class="login-form">
-      <label for="username">Käyttäjänimi:</label>
-      <input type="text" id="username" name="username" required />
+        <label for="password">Salasana:</label>
+        <input type="password" id="password" name="password" required />
 
-      <label for="password">Salasana:</label>
-      <input type="password" id="password" name="password" required />
+        <button type="submit">Kirjaudu sisään</button>
+      </form>
+    </div>
 
-      <button type="submit">Kirjaudu sisään</button>
-    </form>
-  </div>
-
-  <script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>

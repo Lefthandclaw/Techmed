@@ -1,5 +1,5 @@
 function logout() {
-  localStorage.removeItem('jwtToken');
+  localStorage.removeItem("jwtToken");
   window.location.replace("index.html");
 }
 
@@ -9,57 +9,57 @@ const exerciseData = {
       title: "Kevyt venyttely",
       duration: "10min",
       steps: ["1. Etsi hiljainen tila", "2. Seuraa ohjattua venytystä"],
-      audio: "audio/matala-he.mp3"
+      audio: "audio/matala-he.mp3",
     },
     {
       title: "Rauhoittava hengitys",
       duration: "7min",
       steps: ["1. Istu tai makaa mukavasti", "2. Hengitä syvään ja kuuntele"],
-      audio: "audio/matala-me.mp3"
-    }
+      audio: "audio/matala-me.mp3",
+    },
   ],
   kohtalainen: [
     {
       title: "Hengitys harjoitus",
       duration: "8min",
       steps: ["1. Istaudu mukavasti alas", "2. Kuuntele äänite"],
-      audio: "audio/kohtalainen-he.mp3"
+      audio: "audio/kohtalainen-he.mp3",
     },
     {
       title: "Meditaatio harjoitus",
       duration: "5min",
       steps: ["1. Istaudu lattialle maton päälle", "2. Kuuntele äänite"],
-      audio: "audio/kohtalainen-me.mp3"
-    }
+      audio: "audio/kohtalainen-me.mp3",
+    },
   ],
   hyvä: [
     {
       title: "Keskivahva meditaatio",
       duration: "6min",
       steps: ["1. Asetu mukavasti", "2. Kuuntele ohjattua meditaatiota"],
-      audio: "audio/hyva-he.mp3"
+      audio: "audio/hyva-he.mp3",
     },
     {
       title: "Mindfulness harjoitus",
       duration: "6min",
       steps: ["1. Keskity ääniin ympärilläsi", "2. Seuraa ääntä"],
-      audio: "audio/hyva-me.mp3"
-    }
+      audio: "audio/hyva-me.mp3",
+    },
   ],
   erittäin: [
     {
       title: "Syvämeditaatio",
       duration: "12min",
       steps: ["1. Sulje silmät", "2. Syvenny hengitykseen"],
-      audio: "audio/erittain-he.mp3"
+      audio: "audio/erittain-he.mp3",
     },
     {
       title: "Joogaharjoitus",
       duration: "10min",
       steps: ["1. Avaa tila joogalle", "2. Seuraa ohjeita ja hengitä"],
-      audio: "audio/erittain-me.mp3"
-    }
-  ]
+      audio: "audio/erittain-me.mp3",
+    },
+  ],
 };
 
 function updateExercises() {
@@ -73,7 +73,7 @@ function updateExercises() {
     return;
   }
 
-  exercises.forEach(ex => {
+  exercises.forEach((ex) => {
     const column = document.createElement("div");
     column.className = "exercise-column";
     column.innerHTML = `
@@ -101,11 +101,11 @@ document.addEventListener("DOMContentLoaded", () => {
   autoButton.addEventListener("click", () => {
     const savedStatus = localStorage.getItem("todayHRVStatus");
     const savedDate = localStorage.getItem("todayHRVDate");
-  
+
     const today = new Date().toISOString().split("T")[0]; // e.g., "2024-05-07"
-  
+
     const isToday = savedDate === today;
-  
+
     if (savedStatus && isToday && exerciseData[savedStatus]) {
       select.value = savedStatus;
       updateExercises();
@@ -113,7 +113,6 @@ document.addEventListener("DOMContentLoaded", () => {
       showPopup("Päivän HRV-tasoa ei löytynyt. Käy ensin HRV sivulla.");
     }
   });
-  
 
   select.addEventListener("change", updateExercises);
   updateExercises();
