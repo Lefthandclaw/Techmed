@@ -1,4 +1,6 @@
 const token = localStorage.getItem('jwtToken');
+const apiBaseUrl = window.location.origin + '/api';
+
 
 if (!token) {
 	window.location.replace("index.html");
@@ -31,7 +33,7 @@ const fetchData = async (url, options = {}) => {
 const getUserInfo = async () => {
 	console.log('Käyttäjän INFO Kubioksesta');
 
-	const url = 'http://localhost:3000/api/kubios-data/user-info';
+	const url = `${apiBaseUrl}/kubios-data/user-info`;
 	const headers = { Authorization: `Bearer ${token}` };
 	const options = { headers };
 	const userData = await fetchData(url, options);
@@ -51,7 +53,7 @@ let globalUserData = null;
 const getUserData = async () => {
 	console.log('Käyttäjän DATA Kubioksesta');
 
-	const url = 'http://localhost:3000/api/kubios-data/user-data';
+	const url = `${apiBaseUrl}/kubios-data/user-data`;
 	const headers = { Authorization: `Bearer ${token}` };
 	const options = { headers };
 	const userData = await fetchData(url, options);

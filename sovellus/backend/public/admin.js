@@ -1,4 +1,4 @@
-const adminApiBaseUrl = 'http://localhost:3000/api';
+const adminApiBaseUrl = window.location.origin + '/api';
 
 const adminLoginSection = document.getElementById('admin-login-section');
 const adminPanelSection = document.getElementById('admin-panel-section');

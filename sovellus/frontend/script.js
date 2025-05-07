@@ -1,4 +1,4 @@
-const apiBaseUrl = 'http://localhost:3000/api';
+const apiBaseUrl = window.location.origin + '/api';
 
 const loginSection = document.getElementById('login-section');
 const loginForm = document.getElementById('login-form');
