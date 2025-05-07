@@ -43,9 +43,6 @@ const getUserInfo = async () => {
 	console.log(userData);
 };
 
-const getUserInfoBtn = document.querySelector('.get_user_info');
-getUserInfoBtn.addEventListener('click', getUserInfo);
-
 let globalUserData = null;
 
 const getUserData = async () => {
@@ -69,17 +66,13 @@ const getUserData = async () => {
 	  const hrv = latest.result.rmssd_ms;
 	  const stress = latest.result.stress_index;
 	
-	  const latestDate = new Date(latest.daily_result).toDateString();
-	  const today = new Date().toDateString();
-	
-	  if (latestDate === today) {
-		document.getElementById('hrv-date').textContent = `Tallennettu: ${latest.daily_result}`;
-			  let hrvStatus = '–';
+	  document.getElementById('hrv-date').textContent = `Tallennettu: ${latest.daily_result}`;
+		let hrvStatus = '–';
 		if (hrv < 20) hrvStatus = 'Matala';
 		else if (hrv <= 50) hrvStatus = 'Kohtalainen';
 		else if (hrv <= 100) hrvStatus = 'Hyvä';
 		else hrvStatus = 'Erittäin hyvä';
-	
+
 		document.getElementById('hrv-value').textContent = `${hrv.toFixed(1)} ms`;
 		document.getElementById('hrv-status').textContent = hrvStatus;
 		document.getElementById('hrv-status-date').textContent = `Tallennettu: ${latest.daily_result}`;
@@ -87,13 +80,11 @@ const getUserData = async () => {
 		document.getElementById('stress-date').textContent = `Tallennettu: ${latest.daily_result}`;
 		document.getElementById('readiness-value').textContent = `${latest.result.readiness.toFixed(1)} %`;
 		document.getElementById('readiness-date').textContent = `Tallennettu: ${latest.daily_result}`;
-	  
 
-	
 		const shortStatus = hrvStatus.split(" ")[0].toLowerCase();
 		localStorage.setItem("todayHRVStatus", shortStatus);
-		localStorage.setItem("todayHRVDate", today);
-	  }
+		localStorage.setItem("todayHRVDate", latest.daily_result);
+
 	
 	  const allHRV = userData.results
 		.map(r => r?.result?.rmssd_ms)
@@ -121,9 +112,6 @@ const getUserData = async () => {
 
 
 };
-
-const getUserDataBtn = document.querySelector('.get_user_data');
-getUserDataBtn.addEventListener('click', getUserData);
 
 function filterByDays(data, days) {
 	if (days === 'all') return data;
