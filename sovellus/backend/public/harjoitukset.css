@@ -163,7 +163,7 @@ audio {
 }
 
 #auto-select-btn {
-  background-color: #4484c9;
+  background-color: #4e6d8d;
   color: white;
   border: none;
   padding: 0.4rem 1rem;
@@ -177,7 +177,7 @@ audio {
 }
 
 #auto-select-btn:hover {
-  background-color: #376699;
+  background-color: #29425c;
 }
 
 .popup {
@@ -207,7 +207,7 @@ audio {
 .popup button {
   margin-top: 1.2rem;
   padding: 0.4rem 1rem;
-  background-color: #4484c9;
+  background-color: #4e6d8d;
   color: white;
   font-style: italic;
   border: none;

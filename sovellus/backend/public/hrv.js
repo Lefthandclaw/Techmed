@@ -321,7 +321,7 @@ function drawFullCalendar(userData) {
 			let color = '#ccc';
 			if (hrv !== null) {
 				if (hrv < 20) color = '#ef476f';
-				else if (hrv <= 50) color = '#0077b6';
+				else if (hrv <= 50) color = '#4e6d8d';
 				else if (hrv <= 100) color = '#fabc65';
 				else color = '#52b788';
 			}
