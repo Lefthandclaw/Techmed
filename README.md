@@ -144,21 +144,9 @@ TechMed-projektin dokumentaatio.
   
 ---
 
-## 🧪 Ohjelmistotestaus
+## Ohjelmistotestaus
 
-📁 `tests/`
+[Testaus branch](https://github.com/Lefthandclaw/Techmed/tree/testaus)
 
-- Sisältää manuaalitestit ja automatisoidut testit
-- Testiraportit: `tests/reports/`
 
 ---
-
-## ✅ Opettajien pääsy
-
-Kaikki yllä mainittu materiaali on julkaistu tässä GitHub-repossa tai palvelussa, jonka osoite on annettu.  
-Jos tarvitaan käyttöoikeuksia, ne on myönnetty opettajille (esim. GitHub Collaborators, Figma-linkin "Anyone with the link can view").
-
----
-
-## 🗂 Rakenne
-
