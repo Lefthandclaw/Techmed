@@ -70,37 +70,78 @@ TechMed-projektin dokumentaatio.
 
 ## ⚙️ Toteutetut toiminnallisuudet
 
-- 🔐 Käyttäjän kirjautuminen (JWT)
-- 👤 Admin-kirjautuminen
-- 📊 Kubios-integraatio käyttäjädatan hakemiseksi
-- 🔍 Tietojen haku ja listaus
-- 🧪 Testaus Node.js-ympäristössä
-- 📄 API-dokumentaatio (`apidoc`)
-- 🌍 Julkaisu Azure-ympäristössä
+- Käyttäjän kirjautuminen
+
+- JWT-tunnisteen tallennus ja tarkastus
+
+- Uloskirjautuminen
+
+- Kotisivu kirjautumisen jälkeen
+
+- Kubios API -integraatio: käyttäjätiedot
+
+- Kubios API -integraatio: HRV-data
+
+- HRV-yhteenveto (RMSSD, stressi, valmius)
+
+- HRV-arvojen taulukko
+
+- HRV-taulukko suodatus (aikaväli)
+
+- HRV-arvojen kaavio
+
+- HRV-datan suodatus (aikaväli)
+
+- HRV-tason luokittelu ja tilan arviointi
+
+- Päivän HRV-tiedon tallennus localStorageen
+
+- Kalenterinäkymä HRV-datalla (FullCalendar)
+  
+- HRV-arvojen värikoodaus kalenterissa:
+
+- HRV-tasoon perustuva harjoitusvalinta
+
+- Automaattinen harjoituksen valinta päivän HRV:n perusteella
+
+- Harjoituksen ääni-integraatio (audio/mp3)
+
+- Responsiivinen käyttöliittymä
+
+- Popup-ilmoitukset virheistä ja tiedoista
+
+- Animoitu popup-ilmoitus, joka katoaa automaattisesti (fadeInOut-animaatio)
 
 ---
 
-## 🐞 Tiedossa olevat bugit / rajoitteet
+## Tiedossa olevat bugit / rajoitteet
 
-- Token vanhenee ilman automaattista uudistamista
-- Admin- ja käyttäjäpolut eivät ole täysin eriytetyt
-- Responsiivisuus pienillä näytöillä vaatii parannusta
+- HRV-kaavio ei aina skaalaudu oikein mobiililaitteilla
+- Kalenterin kieli on osittain englanniksi, vaikka oletuskieleksi on määritetty suomi
 
 ---
 
-## 📚 Referenssit ja käytetyt työkalut
+## Referenssit ja käytetyt työkalut
 
-- Frontend: React / Tailwind CSS
-- Backend: Express / Node.js
-- API: Kubios HRV API
-- Dokumentaatio: [apidoc](https://apidocjs.com/)
-- Hosting: Azure Cloud VM
-- Graafiset komponentit: Chart.js / Material UI
-- Tutoriaalit:
-  - [Fullstack Open](https://fullstackopen.com/)
-  - MDN Web Docs
-  - Kubios API -dokumentaatio
+### Teknologiat
+- **Frontend**: HTML, CSS, JavaScript (Vanilla)
+- **Visualisointi**: [Chart.js](https://www.chartjs.org/), [FullCalendar](https://fullcalendar.io/)
+- **Tyylit**: Google Fonts (Outfit), responsiivinen design, CSS Grid & Flexbox
+- **Backend**: Node.js, Express.js
+- **API-dokumentaatio**: [apidoc](https://apidocjs.com/)
+- **Tietoturva**: JWT-autentikointi (JSON Web Tokens)
+- **Kolmannen osapuolen rajapinta**: [Kubios HRV API](https://www.kubios.com/hrv-api/)
 
+### Kehitystyökalut
+- Visual Studio Code
+- Git & GitHub
+- Azure Virtual Machine (Linux Ubuntu)
+- npm (pakettienhallinta)
+
+### Dokumentointi & suunnittelu
+- Figma (rautalankamallit)
+- README.md (GitHub-dokumentaatio)
+  
 ---
 
 ## 🧪 Ohjelmistotestaus
