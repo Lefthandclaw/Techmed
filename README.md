@@ -70,6 +70,10 @@ TechMed-projektin dokumentaatio.
 
 ## Toteutetut toiminnallisuudet
 
+- Itse suunniteltu css ja html
+
+- 
+
 - Käyttäjän kirjautuminen
 
 - JWT-tunnisteen tallennus ja tarkastus
@@ -114,10 +118,12 @@ TechMed-projektin dokumentaatio.
 
 ---
 
-## Tiedossa olevat bugit / rajoitteet
+## Tiedossa olevat bugit / ongelmat
 
 - HRV-kaavio ei aina skaalaudu oikein mobiililaitteilla
 - Kalenterin kieli on osittain englanniksi, vaikka oletuskieleksi on määritetty suomi
+- Scrolltobottom behavior smooth, ei toimi
+- Koodissa ei kommenteja tai lähteitä
 
 ---
 
