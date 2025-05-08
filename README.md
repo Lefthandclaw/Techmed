@@ -72,8 +72,6 @@ TechMed-projektin dokumentaatio.
 
 - Itse suunniteltu css ja html
 
-- 
-
 - Käyttäjän kirjautuminen
 
 - JWT-tunnisteen tallennus ja tarkastus
@@ -90,10 +88,12 @@ TechMed-projektin dokumentaatio.
 
 - HRV-arvojen taulukko
 
-- HRV-taulukko suodatus (aikaväli)
-
 - HRV-arvojen kaavio
+  
+- HRV-kaavion suodatus (aikaväli)
 
+- HRV-kaavion poistumine jos ei dataa valitusta aikavälistä, myös popup ilmoitus asiasta
+  
 - HRV-datan suodatus (aikaväli)
 
 - HRV-tason luokittelu ja tilan arviointi
@@ -109,6 +109,8 @@ TechMed-projektin dokumentaatio.
 - Automaattinen harjoituksen valinta päivän HRV:n perusteella
 
 - Harjoituksen ääni-integraatio (audio/mp3)
+
+- Eri äänite jokaiselle harjoitukselle
 
 - Responsiivinen käyttöliittymä
 
