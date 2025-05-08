@@ -7,7 +7,7 @@ import {errorHandler, notFoundHandler} from './middlewares/error-handler.js';
 import kubiosRouter from './routes/kubios-router.js';
 const hostname = '0.0.0.0';
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 
 app.use(cors());
@@ -25,6 +25,6 @@ app.use('/api/kubios-data', kubiosRouter);
 app.use(notFoundHandler);
 app.use(errorHandler);
 
-app.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });

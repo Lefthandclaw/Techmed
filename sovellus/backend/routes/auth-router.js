@@ -1,19 +1,26 @@
-import express from 'express';
-// import {getMe, postLogin} from '../controllers/auth-controller.js';
-import {getMe, login,} from '../controllers/kubios-auth-controller.js';
-import {adminLogin } from '../controllers/auth-controller.js';
-import {authenticateToken} from '../middlewares/authentication.js';
+import express from "express";
+import { getMe, login } from "../controllers/kubios-auth-controller.js";
+import { adminLogin } from "../controllers/auth-controller.js";
+import { authenticateToken } from "../middlewares/authentication.js";
 
 const authRouter = express.Router();
 
 /**
- * @apiDefine all No authentication needed.
+ * @api {get} /api/auth/ping Ping the server
+ * @apiName Ping
+ * @apiGroup Test
+ *
+ * @apiSuccess {String} message The server response message.
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "message": "pong"
+ *     }
  */
-
-/**
- * @apiDefine token Logged in user access only
- * Valid authentication token must be provided within request.
- */
+authRouter.get("/ping", (req, res) => {
+  res.json({ message: "pong" });
+});
 
 /**
  * @api {post} /api/auth/login User login
@@ -22,8 +29,9 @@ const authRouter = express.Router();
  * @apiPermission all
  *
  * @apiBody {String} username Username
- * @apiBody {String} password User's password
- * @apiParamExample {json} Request-Example:
+ * @apiBody {String} password Password
+ *
+ * @apiExample {json} Request-Example:
  *  {
  *    "username": "myusername",
  *    "password": "mypassword"
@@ -31,38 +39,49 @@ const authRouter = express.Router();
  *
  * @apiSuccess {String} message Result of the request
  * @apiSuccess {Object} user User details
- * @apiSuccess {Number} user.user_id User id
+ * @apiSuccess {Number} user.user_id User ID
  * @apiSuccess {String} user.username Username
  * @apiSuccess {String} user.email Email address
  * @apiSuccess {String} user.created_at Registration date
- * @apiSuccess {String} user.user_level User's user level
+ * @apiSuccess {String} user.user_level User level
  * @apiSuccess {String} token Authentication token
  */
-authRouter.post('/login', login);
-
+authRouter.post("/login", login);
 
 /**
- * Route for admin login
  * @api {post} /api/auth/admin_login Admin login
+ * @apiName AdminLogin
+ * @apiGroup Authentication
+ * @apiPermission all
+ *
+ * @apiBody {String} username Admin username
+ * @apiBody {String} password Admin password
+ *
+ * @apiExample {json} Request-Example:
+ *  {
+ *    "username": "admin",
+ *    "password": "secret"
+ *  }
+ *
+ * @apiSuccess {String} token Authentication token
  */
-authRouter.post('/admin_login', adminLogin);
-
+authRouter.post("/admin_login", adminLogin);
 
 /**
- * @api {get} /auth/me Request information about current user
+ * @api {get} /api/auth/me Get current user info
  * @apiName GetMe
  * @apiGroup Authentication
  * @apiPermission token
- * @apiHeader {String} Authorization Bearer token.
  *
- * @apiSuccess {Object} user User info.
- * @apiSuccess {Number} user.user_id Id of the User.
- * @apiSuccess {String} user.username Username of the User.
- * @apiSuccess {String} user.email email of the User.
- * @apiSuccess {Number} user.user_level_id User level id of the User.
- * @apiSuccess {Number} user.iat Token creation timestamp.
+ * @apiHeader {String} Authorization Bearer token
  *
- * @apiSuccessExample Success-Response:
+ * @apiSuccess {Number} user_id User ID
+ * @apiSuccess {String} username Username
+ * @apiSuccess {String} email Email address
+ * @apiSuccess {Number} user_level_id User level
+ * @apiSuccess {Number} iat Token issued-at timestamp
+ *
+ * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *     {
  *       "user_id": 21,
@@ -72,14 +91,14 @@ authRouter.post('/admin_login', adminLogin);
  *       "iat": 1701279021
  *     }
  *
- * @apiError InvalidToken Authentication token was invalid.
+ * @apiError {String} message Invalid token
  *
- * @apiErrorExample Error-Response:
+ * @apiErrorExample {json} Error-Response:
  *     HTTP/1.1 403 Forbidden
  *     {
  *       "message": "invalid token"
  *     }
  */
-authRouter.get('/me/', authenticateToken, getMe);
+authRouter.get("/me", authenticateToken, getMe);
 
 export default authRouter;

@@ -98,20 +98,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const select = document.getElementById("hrv-level");
   const autoButton = document.getElementById("auto-select-btn");
 
-  autoButton.addEventListener("click", () => {
-    const savedStatus = localStorage.getItem("todayHRVStatus");
-    const savedDate = localStorage.getItem("todayHRVDate");
-    const today = new Date().toDateString();
-  
-    const isToday = savedDate === today;
-  
-    if (savedStatus && isToday && exerciseData[savedStatus]) {
-      select.value = savedStatus;
-      updateExercises();
-    } else {
-      showPopup("Päivän HRV-tasoa ei löytynyt. Käy ensin HRV sivulla.");
-    }
-  });
+autoButton.addEventListener("click", () => {
+  const savedStatus = localStorage.getItem("todayHRVStatus");
+  const savedDate = localStorage.getItem("todayHRVDate");
+
+  const today = new Date().toISOString().split("T")[0]; // e.g., "2024-05-07"
+
+  const isToday = savedDate === today;
+
+  if (savedStatus && isToday && exerciseData[savedStatus]) {
+    select.value = savedStatus;
+    updateExercises();
+  } else {
+    showPopup("Päivän HRV-tasoa ei löytynyt. Käy ensin HRV sivulla.");
+  }
+});
 
   select.addEventListener("change", updateExercises);
   updateExercises();
