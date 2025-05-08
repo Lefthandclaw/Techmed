@@ -1,78 +1,70 @@
-#TechMed - Terveyssovellus
+# TechMed - Terveyssovellus
 
 TechMed-projektin dokumentaatio.
 
 ---
 
-##Käyttöliittymän kuvakaappaukset
+## Käyttöliittymän kuvakaappaukset
 
-###Kirjautumissivu
+### Kirjautumissivu
 
 
 ![Kirjautumissivu](https://github.com/user-attachments/assets/368252db-4b96-411a-a108-fe296ed264b4)
 
 ---
 
-###Koti-sivu
+### Koti-sivu
 ![Koti-sivu](https://github.com/user-attachments/assets/674ed4ec-d19c-41fe-bfd5-4e65dd4f1e0c)
 
 ---
 
-### 🏋️‍♂️ Harjoitukset
-Tässä näkymässä käyttäjä näkee omat harjoituksensa. Lista voi sisältää tietoa ajankohdasta, kestosta ja tyypistä.
-![Harjoitukset](./docs/kuvat/workouts.png)
+### Harjoitukset-sivu
+![Harjoitukset](https://github.com/user-attachments/assets/1fb0f0cd-a45f-4539-9cfa-42b20737ef22)
 
 ---
 
-### ❤️ HRV-sivu
+### HRV-sivu
 
-#### 🧾 HRV Yhteenveto
-Yhteenveto-osio näyttää keskeiset HRV-mittarit kuten stressitason, RMSSD:n ja muita terveysindikaattoreita.
-![HRV Yhteenveto](./docs/kuvat/hrv-summary.png)
+#### (1/3)
+![HRV1](https://github.com/user-attachments/assets/eb08861c-8e6e-40d3-a717-55d6d8cdeff4)
 
-#### 📋 HRV Taulukko
-HRV-taulukko sisältää yksityiskohtaiset mittaustiedot, kuten päivämäärän, mittausarvot ja mahdolliset kommentit.
-![HRV Taulukko](./docs/kuvat/hrv-table.png)
+#### (2/3)
+![HRV2](https://github.com/user-attachments/assets/213c6189-2eee-4bae-b49c-e22dc1c3a488)
 
-#### 📈 HRV Kaavio
-Visualisointi HRV-arvojen kehityksestä ajan myötä. Kaavio auttaa käyttäjää seuraamaan terveydentilansa muutoksia.
-![HRV Kaavio](./docs/kuvat/hrv-chart.png)
+#### (3/3)
+![HRV3](https://github.com/user-attachments/assets/22184915-3f66-41cb-a131-7f44915541ec)
 
 ---
 
-## 🌐 Julkaistu sovellus (front-end)
+## Julkaistu sovellus (front-end)
 
-🔗 [https://techmed.northeurope.cloudapp.azure.com](https://techmed.northeurope.cloudapp.azure.com)
-
----
-
-## 🔌 Back-end / API
-
-🔗 [https://techmed.northeurope.cloudapp.azure.com/api](https://techmed.northeurope.cloudapp.azure.com/api)
+[https://techmed.northeurope.cloudapp.azure.com](https://techmed.northeurope.cloudapp.azure.com)
 
 ---
 
-## 📚 API-dokumentaatio (apidoc)
+## Back-end
 
-🔗 [https://techmed.northeurope.cloudapp.azure.com/apidoc](https://techmed.northeurope.cloudapp.azure.com/apidoc)
-
----
-
-## 🎨 Rautalankamallit
-
-🔗 [Figma-mallit](https://www.figma.com/...)  
-Tai kuvat:  
-📁 `docs/wireframes/`
+[https://techmed.northeurope.cloudapp.azure.com/backend.html](https://techmed.northeurope.cloudapp.azure.com/backend.html)
 
 ---
 
-## 🗄️ Tietokantarakenne
+## API-dokumentaatio (apidoc)
 
-📁 `docs/database/structure.png`
+[https://techmed.northeurope.cloudapp.azure.com/apidoc](https://techmed.northeurope.cloudapp.azure.com/apidoc)
 
-![Tietokanta](./docs/database/structure.png)
+---
 
-Tietokanta perustuu käyttäjiin, sessioihin ja HRV-mittauksiin. Käytössä on esimerkiksi MongoDB / PostgreSQL / SQLite.
+## Rautalankamallit
+
+[Figma-mallit](https://github.com/Lefthandclaw/Techmed/tree/main/k%C3%A4ytt%C3%B6liittym%C3%A4%20suunnitelma%20kuvat/figma%20k%C3%A4ytt%C3%B6liittym%C3%A4) 
+
+[Piirretyt mallit](https://github.com/Lefthandclaw/Techmed/tree/main/k%C3%A4ytt%C3%B6liittym%C3%A4%20suunnitelma%20kuvat/piirretty%20k%C3%A4ytt%C3%B6liittym%C3%A4)
+
+---
+
+## Tietokantarakenne
+
+![Tietokanta](https://github.com/user-attachments/assets/15e6bdaf-0974-4c86-a942-91ad88e14964)
 
 ---
 
