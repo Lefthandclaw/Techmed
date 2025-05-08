@@ -6,9 +6,10 @@ TechMed-projektin dokumentaatio.
 
 ##Käyttöliittymän kuvakaappaukset
 
-### 🔐 Kirjautumissivu
+### 🔐 Kirjautumissivu![Screenshot (87)](https://github.com/user-attachments/assets/633130a2-d688-4912-af56-2a5e8647a30d)
 
-![Kirjautumissivu]([./docs/kuvat/login.png](https://github.com/user-attachments/assets/368252db-4b96-411a-a108-fe296ed264b4))
+
+![Kirjautumissivu](https://github.com/user-attachments/assets/368252db-4b96-411a-a108-fe296ed264b4)
 
 ---
 
