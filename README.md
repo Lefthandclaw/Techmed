@@ -68,7 +68,7 @@ TechMed-projektin dokumentaatio.
 
 ---
 
-## ⚙️ Toteutetut toiminnallisuudet
+## Toteutetut toiminnallisuudet
 
 - Käyttäjän kirjautuminen
 
