@@ -6,16 +6,15 @@ TechMed-projektin dokumentaatio.
 
 ##Käyttöliittymän kuvakaappaukset
 
-### 🔐 Kirjautumissivu![Screenshot (87)](https://github.com/user-attachments/assets/633130a2-d688-4912-af56-2a5e8647a30d)
+###Kirjautumissivu
 
 
 ![Kirjautumissivu](https://github.com/user-attachments/assets/368252db-4b96-411a-a108-fe296ed264b4)
 
 ---
 
-### 🏠 Koti-sivu
-Koti-näkymä toimii aloitussivuna sisäänkirjautumisen jälkeen. Se tarjoaa yleiskatsauksen ja ohjaa käyttäjää sovelluksen käyttöön.
-![Koti-sivu](./docs/kuvat/home.png)
+###Koti-sivu
+![Koti-sivu](https://github.com/user-attachments/assets/674ed4ec-d19c-41fe-bfd5-4e65dd4f1e0c)
 
 ---
 
