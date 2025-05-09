@@ -1,7 +1,12 @@
 function logout() {
+  const username = localStorage.getItem("username");
   localStorage.removeItem("jwtToken");
+  localStorage.removeItem("username");
+  localStorage.removeItem(`${username}_todayHRVStatus`);
+  localStorage.removeItem(`${username}_todayHRVDate`);
   window.location.replace("index.html");
 }
+
 
 const exerciseData = {
   matala: [
@@ -99,20 +104,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const autoButton = document.getElementById("auto-select-btn");
 
   autoButton.addEventListener("click", () => {
-    const savedStatus = localStorage.getItem("todayHRVStatus");
-    const savedDate = localStorage.getItem("todayHRVDate");
-
-    const today = new Date().toISOString().split("T")[0]; // e.g., "2024-05-07"
-
+    const username = localStorage.getItem("username");
+    const savedStatus = localStorage.getItem(`${username}_todayHRVStatus`);
+    const savedDate = localStorage.getItem(`${username}_todayHRVDate`);
+  
+    const today = new Date().toISOString().split("T")[0];
     const isToday = savedDate === today;
-
+  
     if (savedStatus && isToday && exerciseData[savedStatus]) {
       select.value = savedStatus;
       updateExercises();
     } else {
-      showPopup("Päivän HRV-tasoa ei löytynyt. Käy ensin HRV sivulla.");
+      showPopup("Päivän HRV-tasoa ei löytynyt.<br> Käy ensin HRV sivulla tai valitse taso.");
     }
   });
+  
 
   select.addEventListener("change", updateExercises);
   updateExercises();
@@ -122,7 +128,7 @@ function showPopup(message) {
   const popup = document.getElementById("popup");
   const msg = document.getElementById("popup-message");
 
-  msg.textContent = message;
+  msg.innerHTML = message;
   popup.classList.add("show");
 }
 

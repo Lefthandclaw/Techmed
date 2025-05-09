@@ -32,6 +32,8 @@ loginForm.addEventListener("submit", async (e) => {
     jwtToken = data.token;
     localStorage.setItem("jwtToken", jwtToken);
 
+    localStorage.setItem("username", username);
+
     window.location.href = "home.html";
   } catch (error) {
     showLoginError("Kirjautuminen epäonnistui: " + error.message);

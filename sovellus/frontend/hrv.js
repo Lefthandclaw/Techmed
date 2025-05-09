@@ -10,7 +10,11 @@ if (usernameSpan) {
 }
 
 function logout() {
+  const username = localStorage.getItem("username");
   localStorage.removeItem("jwtToken");
+  localStorage.removeItem("username");
+  localStorage.removeItem(`${username}_todayHRVStatus`);
+  localStorage.removeItem(`${username}_todayHRVDate`);
   window.location.replace("index.html");
 }
 
@@ -87,9 +91,13 @@ const getUserData = async () => {
     document.getElementById("readiness-date").textContent =
       `Tallennettu: ${latest.daily_result}`;
 
-    const shortStatus = hrvStatus.split(" ")[0].toLowerCase();
-    localStorage.setItem("todayHRVStatus", shortStatus);
-    localStorage.setItem("todayHRVDate", latest.daily_result);
+      const shortStatus = hrvStatus.split(" ")[0].toLowerCase();
+      const today = latest.daily_result;
+      const username = localStorage.getItem("username");
+      
+      localStorage.setItem(`${username}_todayHRVStatus`, shortStatus);
+      localStorage.setItem(`${username}_todayHRVDate`, today);
+      
 
     const allHRV = userData.results
       .map((r) => r?.result?.rmssd_ms)
