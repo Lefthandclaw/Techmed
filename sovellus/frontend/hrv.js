@@ -367,13 +367,13 @@ function drawFullCalendar(userData) {
     
     views: {
       dayGridMonth: {
-        titleFormat: { year: 'numeric', month: '2-digit' } // e.g. 05/2025
+        titleFormat: { year: 'numeric', month: '2-digit' } 
       },
       timeGridWeek: {
-        titleFormat: { day: '2-digit', month: '2-digit', year: 'numeric' } // e.g. 06.05.2025 – 12.05.2025
+        titleFormat: { day: '2-digit', month: '2-digit', year: 'numeric' }
       },
       timeGridDay: {
-        titleFormat: { day: '2-digit', month: '2-digit', year: 'numeric' } // e.g. 09.05.2025
+        titleFormat: { day: '2-digit', month: '2-digit', year: 'numeric' } 
       }
     },
 
