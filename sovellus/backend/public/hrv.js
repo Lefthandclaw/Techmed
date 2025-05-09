@@ -13,8 +13,12 @@ if (usernameSpan) {
 }
 
 function logout() {
-	localStorage.removeItem("jwtToken");
-	window.location.replace("index.html");
+  const username = localStorage.getItem("username");
+  localStorage.removeItem("jwtToken");
+  localStorage.removeItem("username");
+  localStorage.removeItem(`${username}_todayHRVStatus`);
+  localStorage.removeItem(`${username}_todayHRVDate`);
+  window.location.replace("index.html");
 }
 
 const fetchData = async (url, options = {}) => {
@@ -49,69 +53,74 @@ const getUserInfo = async () => {
 const getUserData = async () => {
 	console.log('Käyttäjän DATA Kubioksesta');
 
-	const url = `${apiBaseUrl}/kubios-data/user-data`;
-	const headers = { Authorization: `Bearer ${token}` };
-	const options = { headers };
-	const userData = await fetchData(url, options);
+  const url = `${apiBaseUrl}/kubios-data/user-data`;
+  const headers = { Authorization: `Bearer ${token}` };
+  const options = { headers };
+  const userData = await fetchData(url, options);
 
-	if (userData.error) {
-		console.log('Käyttäjän tietojen haku Kubioksesta epäonnistui');
-		return;
-	}
-	console.log(userData);
+  if (userData.error) {
+    console.log("Käyttäjän tietojen haku Kubioksesta epäonnistui");
+    return;
+  }
+  console.log(userData);
 
-	globalUserData = userData;
+  globalUserData = userData;
 
-	const latest = userData.results.at(-1);
-	if (latest && latest.result) {
-	  const hrv = latest.result.rmssd_ms;
-	  const stress = latest.result.stress_index;
-	
-	  document.getElementById('hrv-date').textContent = `Tallennettu: ${latest.daily_result}`;
-		let hrvStatus = '–';
-		if (hrv < 20) hrvStatus = 'Matala';
-		else if (hrv <= 50) hrvStatus = 'Kohtalainen';
-		else if (hrv <= 100) hrvStatus = 'Hyvä';
-		else hrvStatus = 'Erittäin hyvä';
+  const latest = userData.results.at(-1);
+  if (latest && latest.result) {
+    const hrv = latest.result.rmssd_ms;
+    const stress = latest.result.stress_index;
 
-		document.getElementById('hrv-value').textContent = `${hrv.toFixed(1)} ms`;
-		document.getElementById('hrv-status').textContent = hrvStatus;
-		document.getElementById('hrv-status-date').textContent = `Tallennettu: ${latest.daily_result}`;
-		document.getElementById('stress-level').textContent = `${stress.toFixed(1)} (indeksi)`;
-		document.getElementById('stress-date').textContent = `Tallennettu: ${latest.daily_result}`;
-		document.getElementById('readiness-value').textContent = `${latest.result.readiness.toFixed(1)} %`;
-		document.getElementById('readiness-date').textContent = `Tallennettu: ${latest.daily_result}`;
+    document.getElementById("hrv-date").textContent =
+      `Tallennettu: ${latest.daily_result}`;
+    let hrvStatus = "–";
+    if (hrv < 20) hrvStatus = "Matala";
+    else if (hrv <= 50) hrvStatus = "Kohtalainen";
+    else if (hrv <= 100) hrvStatus = "Hyvä";
+    else hrvStatus = "Erittäin hyvä";
 
-		const shortStatus = hrvStatus.split(" ")[0].toLowerCase();
-		localStorage.setItem("todayHRVStatus", shortStatus);
-		localStorage.setItem("todayHRVDate", latest.daily_result);
+    document.getElementById("hrv-value").textContent = `${hrv.toFixed(1)} ms`;
+    document.getElementById("hrv-status").textContent = hrvStatus;
+    document.getElementById("hrv-status-date").textContent =
+      `Tallennettu: ${latest.daily_result}`;
+    document.getElementById("stress-level").textContent =
+      `${stress.toFixed(1)} (indeksi)`;
+    document.getElementById("stress-date").textContent =
+      `Tallennettu: ${latest.daily_result}`;
+    document.getElementById("readiness-value").textContent =
+      `${latest.result.readiness.toFixed(1)} %`;
+    document.getElementById("readiness-date").textContent =
+      `Tallennettu: ${latest.daily_result}`;
 
-	
-	  const allHRV = userData.results
-		.map(r => r?.result?.rmssd_ms)
-		.filter(val => typeof val === 'number');
-	  if (allHRV.length > 0) {
-		const avg = allHRV.reduce((a, b) => a + b, 0) / allHRV.length;
-		document.getElementById('hrv-avg').textContent = `${avg.toFixed(1)} ms`;
-	  }
-	  
-	}
-	
+      const shortStatus = hrvStatus.split(" ")[0].toLowerCase();
+      const today = latest.daily_result;
+      const username = localStorage.getItem("username");
+      
+      localStorage.setItem(`${username}_todayHRVStatus`, shortStatus);
+      localStorage.setItem(`${username}_todayHRVDate`, today);
+      
 
-	drawChart(userData);
-	drawFullCalendar(userData);
+    const allHRV = userData.results
+      .map((r) => r?.result?.rmssd_ms)
+      .filter((val) => typeof val === "number");
+    if (allHRV.length > 0) {
+      const avg = allHRV.reduce((a, b) => a + b, 0) / allHRV.length;
+      document.getElementById("hrv-avg").textContent = `${avg.toFixed(1)} ms`;
+    }
+  }
 
-	updateView('hrv', 'all');
-	updateView('avg', 'all');
-	updateView('stress', 'all');
-	updateView('status', 'all');
-	updateView('stressAvg', 'all');
-	updateView('statusAvg', 'all');
-	updateView('readiness', 'all');
-	updateView('readinessAvg', 'all');
-	updateView('bpmAvg', 1);
+  drawChart(userData);
+  drawFullCalendar(userData);
 
-
+  updateView("hrv", "all");
+  updateView("avg", "all");
+  updateView("stress", "all");
+  updateView("status", "all");
+  updateView("stressAvg", "all");
+  updateView("statusAvg", "all");
+  updateView("readiness", "all");
+  updateView("readinessAvg", "all");
+  updateView("bpmAvg", 1);
 };
 
 function filterByDays(data, days) {
@@ -311,6 +320,17 @@ function drawFullCalendar(userData) {
 			center: 'title',
 			right: 'dayGridMonth,timeGridWeek,timeGridDay',
 		},
+		    views: {
+      dayGridMonth: {
+        titleFormat: { year: 'numeric', month: '2-digit' } // e.g. 05/2025
+      },
+      timeGridWeek: {
+        titleFormat: { day: '2-digit', month: '2-digit', year: 'numeric' } // e.g. 06.05.2025 – 12.05.2025
+      },
+      timeGridDay: {
+        titleFormat: { day: '2-digit', month: '2-digit', year: 'numeric' } // e.g. 09.05.2025
+      }
+    },
 		titleFormat: { year: 'numeric', month: 'numeric' },
 		dayHeaderFormat: { weekday: 'long' },
 		events: userData.results.map(item => {
