@@ -364,6 +364,19 @@ function drawFullCalendar(userData) {
       center: "title",
       right: "dayGridMonth,timeGridWeek,timeGridDay",
     },
+    
+    views: {
+      dayGridMonth: {
+        titleFormat: { year: 'numeric', month: '2-digit' } // e.g. 05/2025
+      },
+      timeGridWeek: {
+        titleFormat: { day: '2-digit', month: '2-digit', year: 'numeric' } // e.g. 06.05.2025 – 12.05.2025
+      },
+      timeGridDay: {
+        titleFormat: { day: '2-digit', month: '2-digit', year: 'numeric' } // e.g. 09.05.2025
+      }
+    },
+
     titleFormat: { year: "numeric", month: "numeric" },
     dayHeaderFormat: { weekday: "long" },
     events: userData.results.map((item) => {
