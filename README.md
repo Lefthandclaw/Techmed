@@ -16,7 +16,7 @@ Testikansiot:
 
 
 - [report.html](tests/outputs/report.html)
-- [report.html](https://lefthandclaw.github.io/Techmed/results/report.html)
+- [report.html io sivu](https://lefthandclaw.github.io/Techmed/results/report.html)
 
 
 ### Testausdokumentointi
