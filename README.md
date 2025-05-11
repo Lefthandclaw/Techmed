@@ -11,7 +11,13 @@ Testikansiot:
 ### Testitulokset
 
 - [log.html](tests/outputs/log.html)
+- [log.html io sivu](https://lefthandclaw.github.io/Techmed/results/log.html)
+
+
+
 - [report.html](tests/outputs/report.html)
+- [report.html io sivu](https://lefthandclaw.github.io/Techmed/results/report.html)
+
 
 ### Testausdokumentointi
 Testauksen tarkempi dokumentointi löytyy [TESTAUS.md](TESTAUS.md) -tiedostosta, jossa käsitellään:

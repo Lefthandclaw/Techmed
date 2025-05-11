@@ -1,13 +1,24 @@
 <!DOCTYPE html>
-<html lang="fi">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Testitulokset</title>
+  <meta charset="UTF-8" />
+  <title>README Viewer</title>
 </head>
 <body>
-  <h1>Robot Framework - Testitulokset</h1>
-  <p><a href="tests/outputs/log.html">Avaa lokitiedosto (log.html)</a></p>
-  <p><a href="tests/outputs/report.html">Avaa raportti (report.html)</a></p>
+  <div id="readme">Ladataan README.md..</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/showdown/dist/showdown.min.js"></script>
+  <script>
+    fetch('https://raw.githubusercontent.com/Lefthandclaw/Techmed/testaus/README.md')
+      .then(response => response.text())
+      .then(text => {
+        const converter = new showdown.Converter();
+        const html = converter.makeHtml(text);
+        document.getElementById('readme').innerHTML = html;
+      })
+      .catch(error => {
+        document.getElementById('readme').innerHTML = 'Virhe ladattaessa README.md: ' + error;
+      });
+  </script>
 </body>
 </html>
