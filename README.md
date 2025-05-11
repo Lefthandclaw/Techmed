@@ -13,6 +13,8 @@ Testikansiot:
 - [log.html](tests/outputs/log.html)
 - [log.html io sivu](https://lefthandclaw.github.io/Techmed/results/log.html)
 
+
+
 - [report.html](tests/outputs/report.html)
 - [report.html](https://lefthandclaw.github.io/Techmed/results/report.html)
 
