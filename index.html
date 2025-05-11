@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Techmed Project</title>
+  <meta charset="UTF-8" />
+  <title>README Viewer</title>
 </head>
 <body>
-    <h1>Welcome to Techmed</h1>
-    <p>This page links to the README and test reports.</p>
-    <ul>
-        <li><a href="https://github.com/Lefthandclaw/Techmed/blob/testaus/README.md">📘 View README.md</a></li>
-    </ul>
+  <div id="readme">Ladataan README.md...</div>
+  <script>
+    fetch('https://github.com/Lefthandclaw/Techmed/blob/testaus/README.md')
+      .then(response => response.text())
+      .then(text => {
+        // Markdownin näyttämiseen tarvitset converterin
+        const converter = new showdown.Converter(); // Tarvitsee showdown.js
+        const html = converter.makeHtml(text);
+        document.getElementById('readme').innerHTML = html;
+      });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/showdown/dist/showdown.min.js"></script>
 </body>
 </html>
