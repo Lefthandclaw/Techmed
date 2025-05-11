@@ -1,0 +1,371 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.get_user_info,
+.get_user_data,
+pre {
+  display: none;
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+body {
+  font-family: "Outfit", sans-serif;
+  background: #f9f9f9;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar {
+  width: 100%;
+  padding: 1.2rem 2rem;
+  background-color: #fff;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-style: italic;
+  flex-wrap: wrap;
+}
+
+.nav-left {
+  font-size: 1.4rem;
+  font-weight: 400;
+}
+
+.nav-center {
+  list-style: none;
+  display: flex;
+  gap: 2.5rem;
+  justify-content: center;
+  flex: 1;
+  font-size: 1.1rem;
+  font-weight: 400;
+}
+
+.nav-center a {
+  text-decoration: none;
+  color: black;
+  font-style: italic;
+}
+
+.nav-center .active {
+  text-decoration: underline;
+}
+
+.nav-right a {
+  font-size: 1.1rem;
+  font-style: italic;
+  text-decoration: underline;
+  color: black;
+}
+
+.wrapper {
+  max-width: 1100px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+.grid-hrv {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  justify-items: center;
+  align-items: start;
+}
+
+.card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.12);
+  padding: 3.45rem;
+  font-style: italic;
+  font-size: 1.1rem;
+  text-align: center;
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.grid-hrv .card {
+  width: 100%;
+  max-width: 360px;
+  min-height: 160px;
+}
+.card-header {
+  border-bottom: 1px solid #ccc;
+  font-weight: 400;
+  font-style: italic;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
+  font-size: 1.3rem;
+}
+
+.card-body {
+  font-size: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  padding-top: 0.5rem;
+}
+
+.card.wide {
+  grid-column: 1 / -1;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.card.welcome {
+  max-width: 360px;
+  min-height: 160px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 1.3rem;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.12);
+  border-radius: 10px;
+  background: white;
+  font-style: italic;
+}
+
+.buttons {
+  margin-top: 0.8rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.buttons button {
+  font-family: "Outfit", sans-serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 0.95rem;
+  padding: 0.4rem 0.9rem;
+  background-color: #ffffff;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.buttons button:hover {
+  background-color: #f0f0f0;
+  border-color: #999;
+}
+
+.buttons button:disabled {
+  background-color: #eee;
+  color: #aaa;
+  cursor: not-allowed;
+  border-color: #ddd;
+}
+
+#jsChart {
+  max-width: 100%;
+  width: 100%;
+  height: 400px;
+}
+
+.popup-alert {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 1.2rem 2rem;
+  font-family: "Outfit", sans-serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: #333;
+  z-index: 9999;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  animation: fadeInOut 3s ease-in-out forwards;
+  pointer-events: none;
+  text-align: center;
+  max-width: 80%;
+  line-height: 1.4;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -55%);
+  }
+  10% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -45%);
+  }
+}
+
+#calendar2 {
+  background-color: white;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.12);
+  font-family: "Outfit", sans-serif;
+  font-style: italic;
+  width: 100%;
+  max-width: 1000px;
+  margin: 2rem auto;
+}
+
+.fc .fc-toolbar-title {
+  font-size: 1.4rem;
+  font-style: italic;
+  text-align: center;
+}
+
+.fc .fc-daygrid-day-number {
+  font-size: 0.9rem;
+  font-weight: 300;
+}
+
+.fc .fc-event-title {
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.fc .fc-button {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  font-family: "Outfit", sans-serif;
+  font-style: italic;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+@media screen and (max-width: 768px) {
+  .grid-hrv {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .card,
+  .card.wide,
+  .card.welcome {
+    width: 90%;
+    max-width: none;
+  }
+
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .nav-center {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .wrapper {
+    padding: 0 1rem;
+  }
+
+  .card-body,
+  .card-header {
+    font-size: 1rem;
+  }
+
+  .card.welcome {
+    font-size: 1rem;
+    padding: 1rem;
+    text-align: center;
+  }
+}
+
+.buttons button.active {
+  background-color: #4e6d8d;
+  color: white;
+  border-color: #4e6d8d;
+}
+
+h2 {
+  font-family: "Outfit", sans-serif;
+  font-style: italic;
+  font-size: 1.4rem;
+  font-weight: 400;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.hrv-date {
+  margin-top: 2em;
+  font-size: 0.9rem;
+  color: rgb(97, 97, 97);
+}
+.calendar-legend {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  font-style: italic;
+  font-family: "Outfit", sans-serif;
+  max-width: 100%;
+  text-align: center;
+}
+
+.legend-items {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.legend-items div {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.legend-color {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+}
+
+.welcome-row {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.welcome-row .card {
+  flex: 1 1 320px;
+  max-width: 400px;
+}

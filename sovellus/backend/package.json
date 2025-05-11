@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "apidoc": "apidoc -i routes/ -o public/apidoc/"
   },
   "type": "module",
   "dependencies": {
@@ -19,5 +20,9 @@
     "jsonwebtoken": "^9.0.2",
     "mysql": "^2.18.1",
     "mysql2": "^3.13.0"
+  },
+  "devDependencies": {
+    "apidoc": "^1.2.0",
+    "nodemon": "^3.1.10"
   }
 }

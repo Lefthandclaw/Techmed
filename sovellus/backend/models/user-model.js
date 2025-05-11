@@ -1,4 +1,4 @@
-import promisePool from '../utils/database.js';
+import promisePool from "../utils/database.js";
 
 /**
  * Fetch all userdata except passwords from database
@@ -6,9 +6,9 @@ import promisePool from '../utils/database.js';
  */
 const selectAllUsers = async () => {
   const [rows] = await promisePool.query(
-    'SELECT user_id, username, email, created_at, user_level FROM Users',
+    "SELECT user_id, username, email, created_at, user_level FROM Users",
   );
-  console.log('selectAllUsers result', rows);
+  console.log("selectAllUsers result", rows);
   return rows;
 };
 
@@ -22,7 +22,7 @@ const selectAllUsers = async () => {
 const selectUserById = async (userId) => {
   try {
     const [rows] = await promisePool.query(
-      'SELECT user_id, username, email, created_at, user_level FROM Users WHERE user_id=?',
+      "SELECT user_id, username, email, created_at, user_level FROM Users WHERE user_id=?",
       [userId],
     );
     console.log(rows);
@@ -30,7 +30,7 @@ const selectUserById = async (userId) => {
     return rows[0];
   } catch (error) {
     console.error(error);
-    throw new Error('database error');
+    throw new Error("database error");
   }
 };
 
@@ -41,14 +41,14 @@ const selectUserById = async (userId) => {
  */
 const insertUser = async (user) => {
   // try {
-    const [result] = await promisePool.query(
-      "INSERT INTO Users (username, password, email) VALUES (?, ?, ?)",
-      // "INSERT INTO Users (username, password, email, user_level) VALUES (?, ?, ?, 'admin')", // for admin user
-      [user.username, user.password, user.email],
-    );
-    console.log('insertUser', result);
-    // return only first item of the result array
-    return result.insertId;
+  const [result] = await promisePool.query(
+    "INSERT INTO Users (username, password, email) VALUES (?, ?, ?)",
+    // "INSERT INTO Users (username, password, email, user_level) VALUES (?, ?, ?, 'admin')", // for admin user
+    [user.username, user.password, user.email],
+  );
+  console.log("insertUser", result);
+  // return only first item of the result array
+  return result.insertId;
   // } catch (error) {
   //   console.error(error);
   //   throw new Error('database error');
@@ -64,7 +64,7 @@ const insertUser = async (user) => {
 const selectUserByNameAndPassword = async (username, password) => {
   try {
     const [rows] = await promisePool.query(
-      'SELECT user_id, username, email, created_at, user_level FROM Users WHERE username=? AND password=?',
+      "SELECT user_id, username, email, created_at, user_level FROM Users WHERE username=? AND password=?",
       [username, password],
     );
     console.log(rows);
@@ -72,7 +72,7 @@ const selectUserByNameAndPassword = async (username, password) => {
     return rows[0];
   } catch (error) {
     console.error(error);
-    throw new Error('database error');
+    throw new Error("database error");
   }
 };
 
@@ -84,7 +84,7 @@ const selectUserByNameAndPassword = async (username, password) => {
 const selectUserByUsername = async (username) => {
   try {
     const [rows] = await promisePool.query(
-      'SELECT user_id, username, password, email, created_at, user_level FROM Users WHERE username=?',
+      "SELECT user_id, username, password, email, created_at, user_level FROM Users WHERE username=?",
       [username],
     );
     console.log(rows);
@@ -92,41 +92,40 @@ const selectUserByUsername = async (username) => {
     return rows[0];
   } catch (error) {
     console.error(error);
-    throw new Error('database error');
+    throw new Error("database error");
   }
 };
-
 
 const deleteUserById = async (userId) => {
   try {
     const [rows] = await promisePool.query(
-      'DELETE FROM Users WHERE user_id=?',
+      "DELETE FROM Users WHERE user_id=?",
       [userId],
     );
     // return only first item of the result array
     return rows;
   } catch (error) {
     console.error(error);
-    throw new Error('database error');
+    throw new Error("database error");
   }
-}
+};
 
 const selectUserByEmail = async (email) => {
   try {
-    const sql = 'SELECT * FROM Users WHERE email=?';
+    const sql = "SELECT * FROM Users WHERE email=?";
     const params = [email];
     const [rows] = await promisePool.query(sql, params);
     // console.log(rows);
     // if nothing is found with the user id, result array is empty []
     if (rows.length === 0) {
-      return {error: 404, message: 'user not found'};
+      return { error: 404, message: "user not found" };
     }
     // Remove password property from result
     delete rows[0].password;
     return rows[0];
   } catch (error) {
-    console.error('selectUserByEmail', error);
-    return {error: 500, message: 'db error'};
+    console.error("selectUserByEmail", error);
+    return { error: 500, message: "db error" };
   }
 };
 

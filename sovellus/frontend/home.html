@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kotisivu</title>
+  <link rel="stylesheet" href="home.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet" />
+  <script>
+    const token = localStorage.getItem('jwtToken');
+    if (!token) {
+      window.location.replace("index.html");
+    }
+  </script>
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <div class="nav-left">TECHMED</div>
+    <ul class="nav-center">
+      <li><a href="home.html" class="active">Koti</a></li>
+      <li><a href="harjoitukset.html">Harjoitukset</a></li>
+      <li><a href="hrv.html">HRV</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="#" onclick="logout()"><u>Kirjaudu ulos</u></a>
+    </div>
+  </nav>
+
+  <main class="home-wrapper">
+    <div class="card full-width center">
+      <p><em>HRV-tasot<br>(Arvot mitataan RMSSD-menetelmällä ja yksikkö on ms – millisekuntia)</em></p>
+    </div>
+
+    <div class="card-row">
+      <div class="card">
+        <p><em>HRV voi laskea:<br>
+            Huonolla unella<br>
+            Liiallisella treenillä<br>
+            Stressillä<br>
+            Sairastumisella</em></p>
+      </div>
+
+      <div class="card center highlight">
+        <p><em>HRV-tasot:<br>
+            Matala   (Alle 20 ms)<br>
+            Kohtalainen  (20–50 ms)<br>
+            Hyvä    (50–100 ms)<br>
+            Erittäin hyvä  (Yli 100 ms)</em></p>
+      </div>
+
+      <div class="card">
+        <p><em>HRV voi nousta:<br>
+            Levolla ja hyvällä unella<br>
+            Kevyellä palauttelulla<br>
+            Rentoutusharjoituksilla<br>
+            Terveellisellä ravinnolla</em></p>
+      </div>
+    </div>
+
+    <div class="card-row">
+      <div class="card">
+        <p><em>Valmiustaso (Readiness):<br>
+            Kuvaa kehon palautumista ja kykyä suoriutua päivän haasteista.<br>
+            <strong>Korkea:</strong> yli 85 – keho valmis rasitukseen<br>
+            <strong>Matala:</strong> alle 50 – lepo tai kevyt päivä suositeltu
+          </em></p>
+      </div>
+
+      <div class="card">
+        <p><em>Stressi-indeksi:<br>
+            Arvioi kehon fyysistä stressitasoa sykevälivaihtelun perusteella.<br>
+            <strong>Korkea:</strong> yli 15 – keho kuormittunut, vältä lisästressiä<br>
+            <strong>Matala:</strong> alle 5 – keho rauhallinen ja palautunut
+          </em></p>
+      </div>
+    </div>
+
+
+    </div>
+
+  </main>
+
+  <script>
+    function logout() {
+      localStorage.removeItem('jwtToken');
+      window.location.replace("index.html");
+    }
+  </script>
+
+</body>
+
+</html>

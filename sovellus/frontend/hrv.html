@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HRV</title>
+    <link rel="stylesheet" href="hrv.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.17/index.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.17/locales-all.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.17/daygrid.global.min.js"></script>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-left">TECHMED</div>
+      <ul class="nav-center">
+        <li><a href="home.html">Koti</a></li>
+        <li><a href="harjoitukset.html">Harjoitukset</a></li>
+        <li><a href="hrv.html" class="active">HRV</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="#" onclick="logout()"><u>Kirjaudu ulos</u></a>
+      </div>
+    </nav>
+
+    <main class="wrapper">
+      <div class="welcome-row">
+        <div class="card welcome center">
+          <p>
+            <em>Tervetuloa tarkastelemaan<br />HRV tasojasi</em>
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-header">Syke Keskiarvo</div>
+          <div class="card-body">
+            <em id="bpm-avg">–</em>
+            <div class="buttons">
+              <button
+                onclick="updateView('bpmAvg', 1)"
+                data-type="bpmAvg"
+                data-range="1"
+              >
+                Tänään
+              </button>
+              <button
+                onclick="updateView('bpmAvg', 7)"
+                data-type="bpmAvg"
+                data-range="7"
+              >
+                7d
+              </button>
+              <button
+                onclick="updateView('bpmAvg', 30)"
+                data-type="bpmAvg"
+                data-range="30"
+              >
+                30d
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="buttons">
+        <button onclick="scrollToBottom()">Mene mittaustuloksiin</button>
+      </div>
+
+      <pre>GET http://localhost:3000/api/kubios/user-info</pre>
+      <button class="get_user_info">Get user info</button>
+
+      <pre>GET  http://localhost:3000/api/kubios/user-data</pre>
+      <button class="get_user_data">Get user data</button>
+
+      <div class="buttons">
+        <button
+          onclick="drawChart(globalUserData, 7)"
+          data-type="chart"
+          data-range="7"
+        >
+          7d
+        </button>
+        <button
+          onclick="drawChart(globalUserData, 30)"
+          data-type="chart"
+          data-range="30"
+        >
+          30d
+        </button>
+        <button
+          onclick="drawChart(globalUserData, 'all')"
+          data-type="chart"
+          data-range="all"
+        >
+          Kaikki
+        </button>
+      </div>
+
+      <div>
+        <canvas id="jsChart"></canvas>
+      </div>
+
+      <div id="popup-alert" class="popup-alert" style="display: none">
+        – ei dataa valitulla aikavälillä –
+      </div>
+      <br>
+      <br>
+      <h2>HRV kalenteri</h2>
+      <div class="calendar-legend">
+        HRV-värien selitykset:
+        <div class="legend-items">
+          <div>
+            <span class="legend-color" style="background-color: #ef476f"></span>
+            Matala (alle 20 ms)
+          </div>
+          <div>
+            <span class="legend-color" style="background-color: #4e6d8d"></span>
+            Kohtalainen (20–50 ms)
+          </div>
+          <div>
+            <span class="legend-color" style="background-color: #fabc65"></span>
+            Hyvä (50–100 ms)
+          </div>
+          <div>
+            <span class="legend-color" style="background-color: #52b788"></span>
+            Erittäin hyvä (yli 100 ms)
+          </div>
+        </div>
+      </div>
+
+      <div id="calendar2" style="width: 100%"></div>
+
+      <div class="grid-hrv">
+        <div class="card">
+          <div class="card-header">HRV</div>
+          <div class="card-body">
+            <em id="hrv-value">–</em>
+            <p id="hrv-date" class="hrv-date">– ei päivämäärää –</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">HRV Keskiarvo</div>
+          <div class="card-body">
+            <em id="hrv-avg">–</em>
+            <div class="buttons">
+              <button
+                onclick="updateView('avg', 7)"
+                data-type="avg"
+                data-range="7"
+              >
+                7d
+              </button>
+              <button
+                onclick="updateView('avg', 30)"
+                data-type="avg"
+                data-range="30"
+              >
+                30d
+              </button>
+              <button
+                onclick="updateView('avg', 'all')"
+                data-type="avg"
+                data-range="all"
+              >
+                Kaikki
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">HRV Taso</div>
+          <div class="card-body">
+            <em id="hrv-status">–</em>
+            <p id="hrv-status-date" class="hrv-date">– ei päivämäärää –</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">HRV Taso Keskiarvo</div>
+          <div class="card-body">
+            <em id="hrv-status-avg">–</em>
+            <div class="buttons">
+              <button
+                onclick="updateView('statusAvg', 7)"
+                data-type="statusAvg"
+                data-range="7"
+              >
+                7d
+              </button>
+              <button
+                onclick="updateView('statusAvg', 30)"
+                data-type="statusAvg"
+                data-range="30"
+              >
+                30d
+              </button>
+              <button
+                onclick="updateView('statusAvg', 'all')"
+                data-type="statusAvg"
+                data-range="all"
+              >
+                Kaikki
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">Stressi taso</div>
+          <div class="card-body">
+            <em id="stress-level">–</em>
+            <p id="stress-date" class="hrv-date">– ei päivämäärää –</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">Stressi Keskiarvo</div>
+          <div class="card-body">
+            <em id="stress-avg">–</em>
+            <div class="buttons">
+              <button
+                onclick="updateView('stressAvg', 7)"
+                data-type="stressAvg"
+                data-range="7"
+              >
+                7d
+              </button>
+              <button
+                onclick="updateView('stressAvg', 30)"
+                data-type="stressAvg"
+                data-range="30"
+              >
+                30d
+              </button>
+              <button
+                onclick="updateView('stressAvg', 'all')"
+                data-type="stressAvg"
+                data-range="all"
+              >
+                Kaikki
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">Valmiustaso</div>
+          <div class="card-body">
+            <em id="readiness-value">–</em>
+            <p id="readiness-date" class="hrv-date">– ei päivämäärää –</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">Valmiustaso Keskiarvo</div>
+          <div class="card-body">
+            <em id="readiness-avg">–</em>
+            <div class="buttons">
+              <button
+                onclick="updateView('readinessAvg', 7)"
+                data-type="readinessAvg"
+                data-range="7"
+              >
+                7d
+              </button>
+              <button
+                onclick="updateView('readinessAvg', 30)"
+                data-type="readinessAvg"
+                data-range="30"
+              >
+                30d
+              </button>
+              <button
+                onclick="updateView('readinessAvg', 'all')"
+                data-type="readinessAvg"
+                data-range="all"
+              >
+                Kaikki
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="hrv.js"></script>
+  </body>
+</html>

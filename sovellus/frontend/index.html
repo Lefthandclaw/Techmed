@@ -1,48 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TechMed</title>
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-  <div class="container" id="login-section">
-    <h2>Login</h2>
-    <form id="login-form">
-      <input type="text" id="username" placeholder="Username" required />
-      <input type="password" id="password" placeholder="Password" required />
-      <button type="submit">Log In</button>
-    </form>
-    <p>
-      Don't have an account?
-      <a href="#" id="show-register">Register here</a>
-    </p>
-  </div>
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kirjaudu sisään</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div id="login-section" class="login-container">
+      <h1 class="title">Kirjaudu sisään</h1>
 
-  <div class="container" id="register-section" style="display: none;">
-    <h2>Register</h2>
-    <form id="register-form">
-      <input type="text" id="reg-username" placeholder="Username" required />
-      <input type="text" id="reg-email" placeholder="Email" required />
-      <input type="password" id="reg-password" placeholder="Password" required />
-      <button type="submit">Register</button>
-    </form>
-    <p>
-      Already have an account?
-      <a href="#" id="show-login">Login here</a>
-    </p>
-  </div>
+      <div id="login-alert" class="alert" style="display: none"></div>
 
-  <div class="container" id="diary-section" style="display: none;">
-    <h2>HELLO</h2>
-    <button id="logout-btn">Log Out</button>
-    <hr />
+      <form id="login-form" class="login-form">
+        <label for="username">Käyttäjänimi:</label>
+        <input type="text" id="username" name="username" required />
+
+        <label for="password">Salasana:</label>
+        <input type="password" id="password" name="password" required />
+
+        <button type="submit">Kirjaudu sisään</button>
+      </form>
     </div>
-    <div id="entries">
-    </div>
-  </div>
 
-  <script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>

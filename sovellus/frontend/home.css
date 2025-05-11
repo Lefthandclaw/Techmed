@@ -1,0 +1,145 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Outfit", sans-serif;
+  background: #f9f9f9;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar {
+  width: 100%;
+  padding: 1.2rem 2rem;
+  background-color: #fff;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-style: italic;
+  flex-wrap: wrap;
+}
+
+.nav-left {
+  font-size: 1.4rem;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.nav-center {
+  list-style: none;
+  display: flex;
+  gap: 2.5rem;
+  justify-content: center;
+  flex: 1;
+  font-size: 1.1rem;
+  font-weight: 400;
+}
+
+.nav-center a {
+  text-decoration: none;
+  color: black;
+  font-style: italic;
+}
+
+.nav-center .active {
+  text-decoration: underline;
+}
+
+.nav-right a {
+  font-size: 1.1rem;
+  font-style: italic;
+  text-decoration: underline;
+  color: black;
+}
+
+.home-wrapper {
+  width: 100%;
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 0 1%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+.card-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.card {
+  flex: 1 1 0;
+  max-width: 300px;
+  min-width: 250px;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 1.1rem;
+  line-height: 1.8rem;
+  text-align: left;
+}
+
+.card p {
+  white-space: pre-line;
+}
+
+.card.full-width {
+  max-width: 800px;
+  text-align: center;
+  font-size: 1.3rem;
+}
+
+.card.center.highlight {
+  font-size: 1.1rem;
+  padding: 2rem;
+  max-width: 300px;
+}
+
+@media screen and (max-width: 850px) {
+  .card-row {
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .card {
+    max-width: 90%;
+    height: auto;
+    font-size: 1rem;
+  }
+
+  .card.center.highlight {
+    font-size: 1.15rem;
+    max-width: 95%;
+    height: auto;
+  }
+
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .nav-center {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+}

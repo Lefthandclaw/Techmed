@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Harjoitukset</title>
+    <link rel="stylesheet" href="harjoitukset.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      const token = localStorage.getItem("jwtToken");
+      if (!token) {
+        window.location.replace("index.html");
+      }
+    </script>
+  </head>
+
+  <body>
+    <nav class="navbar">
+      <div class="nav-left">TECHMED</div>
+      <ul class="nav-center">
+        <li><a href="home.html">Koti</a></li>
+        <li><a href="harjoitukset.html" class="active">Harjoitukset</a></li>
+        <li><a href="hrv.html">HRV</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="#" onclick="logout()"><u>Kirjaudu ulos</u></a>
+      </div>
+    </nav>
+
+    <main class="wrapper">
+      <div class="page-header">
+        <p id="today-date"><em>Päivän ...</em></p>
+        <p><em>Harjoitukset HRV tasolle:</em></p>
+        <button id="auto-select-btn">Aseta päivän HRV-tason mukaan</button>
+        <select id="hrv-level">
+          <option value="matala">Matala</option>
+          <option value="kohtalainen" selected>Kohtalainen</option>
+          <option value="hyvä">Hyvä</option>
+          <option value="erittäin">Erittäin hyvä</option>
+        </select>
+      </div>
+
+      <div id="popup" class="popup hidden">
+        <p id="popup-message"></p>
+        <button onclick="closePopup()">OK</button>
+      </div>
+
+      <div class="exercise-table" id="exercise-container"></div>
+    </main>
+
+    <script src="harjoitukset.js"></script>
+  </body>
+</html>
