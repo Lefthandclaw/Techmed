@@ -154,5 +154,10 @@ TechMed-projektin dokumentaatio.
 
 [Testaus branch](https://github.com/Lefthandclaw/Techmed/tree/testaus)
 
+[Testaus io sivu](https://lefthandclaw.github.io/Techmed/)
+
+[log.html io sivu](https://lefthandclaw.github.io/Techmed/results/log.html)
+
+[report.html io sivu](https://lefthandclaw.github.io/Techmed/results/report.html)
 
 ---
